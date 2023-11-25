@@ -1,29 +1,29 @@
 evi_color = {
     "EMF 5": "#db4d48",
     "DOTs": "#2ccc29",
-    "Ultraviolet": "#ad8ce7",
-    "Freezing": "#9ae0f7",
-    "Ghost Orbs": "#dbd993",
-    "Writing": "#4d8ce3",
+    "Ultravioleta": "#ad8ce7",
+    "Temperaturas": "#9ae0f7",
+    "Orbes espectrales": "#dbd993",
+    "Escritura": "#4d8ce3",
     "Spirit Box": "#d18c5e", 
 }
 
 evi_icons = {
     "EMF 5": "imgs/emf5-icon.png",
     "DOTs": "imgs/dots-icon.png",
-    "Ultraviolet": "imgs/fingerprints-icon.png",
-    "Freezing": "imgs/freezing-icon.png",
-    "Ghost Orbs": "imgs/orbs-icon.png",
-    "Writing": "imgs/writing-icon.png",
+    "Ultravioleta": "imgs/fingerprints-icon.png",
+    "Temperaturas": "imgs/freezing-icon.png",
+    "Orbes espectrales": "imgs/orbs-icon.png",
+    "Escritura": "imgs/writing-icon.png",
     "Spirit Box": "imgs/spirit-box-icon.png", 
 }
 
 behavior_titles = {
-    "<Tells>":"<div class='dtitle'><i>Tells</i><div class='ddash'></div></div>",
-    "<Behaviors>":"<div class='dtitle'><i>Behaviors</i><div class='ddash'></div></div>",
-    "<Hunt Sanity>":"<div class='dtitle'><i>Hunt Sanity</i><div class='ddash'></div></div>",
-    "<Hunt Speed>":"<div class='dtitle'><i>Hunt Speed</i><div class='ddash'></div></div>",
-    "<Evidence>":"<div class='dtitle'><i>Evidence</i><div class='ddash'></div></div>"
+    "<Información>":"<div class='dtitle'><i>Tells</i><div class='ddash'></div></div>",
+    "<Comportamiento>":"<div class='dtitle'><i>Behaviors</i><div class='ddash'></div></div>",
+    "<Cordura de ataque>":"<div class='dtitle'><i>Hunt Sanity</i><div class='ddash'></div></div>",
+    "<Velocidad>":"<div class='dtitle'><i>Hunt Speed</i><div class='ddash'></div></div>",
+    "<Evidencia>":"<div class='dtitle'><i>Evidence</i><div class='ddash'></div></div>"
 }
 
 class Ghost {

@@ -1,6 +1,6 @@
 <head>
     <meta charset="UTF-8">
-    <title>Unofficial Phasmophobia Cheat Sheet</title>
+    <title>Guía no oficial de Phasmophobia/title>
     
     <link rel="icon" type="image/x-icon" href="https://zero-network.net/phasmophobia/static/imgs/favicon.ico">
     <meta name="Description" content="The Unofficial Phasmo Cheat Sheet is the ultimate cheat sheet for the popular horror video game Phasmophobia. It includes features such as BPM Finder, Shared Journal Link, Desktop Link, and more to help make you more successful in your ghost hunting endeavors" />
@@ -64,8 +64,8 @@
         <div id="info_box_voice">
             <span class="icon" onclick="showVoiceInfo()"></span>
 
-            <h3>Voice Commands</h3>
-            <div class="info_text">Voice commands allow you to control the cheat sheet via your voice. Once you hit enable, the cheat sheet will begin listening to your voice commands and will persist between resets until you disable it. It will by default read from your default microphone, so ensure that it is set correctly. The voice recognition will continue to work even if the page is not in focus and you are using the same microphone in-game.</div>
+            <h3>Comandos de voz</h3>
+            <div class="info_text">Los comandos de voz te permiten controlar la pagina con la voz. Una vez que lo actives, la pagina estará escuchando tus comandos y se mantendrá hasta que reinicies o deshabilites esto. Tomara tu micrófono por defecto para asegurarse que funciona correctamente. El reconocimiento de voz seguirá funcionando incluso cuando la pagina esta minimizada y estés usando tu micrófono en el juego.</div>
             <div class="info_block" style="margin-top: 10px; overflow-y: scroll; overflow-x: hidden;">
                 <strong>Evidence:</strong>
                 <ul>
@@ -128,16 +128,16 @@
 
     <div id="settings_box" style="left: -1000px;">
         <div id="settings_tab" onclick="showSettings()">
-            Settings
+            Ajustes
             <div id="settings_status"></div>
             <div id="dllink_status"></div>
             <div id="voice_recognition_status" class="pulse_animation" style="display:none; background-image: url(imgs/mic.png);"></div>
         </div>
         <span class="icon" onclick="showSettings()"></span>
 
-        <div class="settings_title yfont white">Settings</div>
+        <div class="settings_title yfont white">Ajustes</div>
         <div class="info_block">
-            <div class="modifier_volume yfont white">Volume</div>
+            <div class="modifier_volume yfont white">Volumen</div>
             <input type="range" id="modifier_volume" name="volume" 
                 min="0" max="100" step="2" default="50" onchange="setVolume();saveSettings();">
             <div class="modifier_volume_labels">
@@ -148,109 +148,109 @@
                 <div class="modifier_volume_label">100%</div>
             </div>
             <div class="modifier_note">
-                <input type="checkbox" id="mute_timer_countdown" name="mute_timer_countdown" class="settings_check" onclick="mute('countdown');saveSettings();"><label for="mute_timer_countdown">Mute Timer Countdown</label>
+                <input type="checkbox" id="mute_timer_countdown" name="mute_timer_countdown" class="settings_check" onclick="mute('countdown');saveSettings();"><label for="mute_timer_countdown">Silenciar temporizador</label>
             </div>
             <div class="modifier_note less_pad">
-                <input type="checkbox" id="mute_timer_toggle" name="mute_timer_toggle" class="settings_check" onclick="mute('toggle');saveSettings();"><label for="mute_timer_toggle">Mute Timer Toggle</label>
+                <input type="checkbox" id="mute_timer_toggle" name="mute_timer_toggle" class="settings_check" onclick="mute('toggle');saveSettings();"><label for="mute_timer_toggle">Silenciar activación del temporizador</label>
             </div>
             <hr>
-            <div class="modifier_volume yfont white">Speed Offset</div>
+            <div class="modifier_volume yfont white">Compensación de velocidad</div>
             <div id="speed_offset">
                 <span id="minus_speed" class="speed_icon" onclick="adjustOffset(-1);setTempo();saveSettings();">-</span>
                 <span id="offset_value"> 0% </span>
                 <span id="minus_speed" class="speed_icon" onclick="adjustOffset(1);setTempo();saveSettings();">+</span></div>
-            <div class="modifier_note">(Adjust speed of footsteps)</div>
+            <div class="modifier_note">(Ajusta la velocidad de los pasos)</div>
             <hr>
-            <div class="modifier_volume yfont white">Speed Filter Logic</div>
+            <div class="modifier_volume yfont white">Lógica del filtro de velocidad</div>
             <div class="speed_logic_select">
-                <span>OR</span>
+                <span>O</span>
                 <label for="speed_logic_type" onchange="filter();saveSettings();">
                     <input type="checkbox" name="" id="speed_logic_type">
                     <div class="toggle"></div>
                 </label>
-                <span>AND</span>
+                <span>Y</span>
             </div>
             <hr>
             <div class="modifier_volume yfont white">BPM to m/s</div>
             <div class="speed_logic_select">
-                <span>Exact</span>
+                <span>Exacto</span>
                 <label for="bpm_type" onchange="bpm_calc(true);saveSettings();">
                     <input type="checkbox" name="" id="bpm_type">
                     <div class="toggle"></div>
                 </label>
-                <span>Rounded</span>
+                <span>Alrededor/span>
             </div>
             <hr>
-            <div class="modifier_volume yfont white">Voice Commands</div>
+            <div class="modifier_volume yfont white">Comandos de voz</div>
             <div class="journal_link vc_link">
                 <div class="journal_link_buttons">
-                    <button id="start_voice" class="journal_link_button" onclick="start_voice()">Enable</button>
-                    <button id="stop_voice" class="journal_link_button" onclick="stop_voice()" disabled>Disable</button>
+                    <button id="start_voice" class="journal_link_button" onclick="start_voice()">Activado</button>
+                    <button id="stop_voice" class="journal_link_button" onclick="stop_voice()" disabled>Desactivado</button>
                 </div>
             </div>
-            <div id="voice_recognition_note" class="modifier_note"><div onclick="showVoiceInfo()" class="link_hover">Commands and Info &#187;</div></div>
+            <div id="voice_recognition_note" class="modifier_note"><div onclick="showVoiceInfo()" class="link_hover">Comandos e información &#187;</div></div>
             <hr>
-            <div class="modifier_volume yfont white">Shared Journal Link</div>
+            <div class="modifier_volume yfont white">Enlace del diario</div>
             <div class="journal_link">
                 <input type="text" placeholder="XXXXXX" id="room_id" class="text" value="Connecting..." disabled style="color:#444;">
-                <div id="room_id_cover" class="copy_cover" style="display:none;">Copied!</div>
+                <div id="room_id_cover" class="copy_cover" style="display:none;">¡Copiado!</div>
                 <img class="clipboard_icon" src="imgs/copy.png" onclick="copy_url_code()">
                 <div class="journal_link_buttons">
-                    <button id="room_id_create" class="journal_link_button" style="display: none;" onclick="create_room()">Create</button>
-                    <button id="room_id_link" class="journal_link_button" style="display: none;" onclick="link_room()">Join</button>
-                    <button id="room_id_disconnect" class="journal_link_button" style="display: none;" onclick="disconnect_room()">Disconnect</button>
+                    <button id="room_id_create" class="journal_link_button" style="display: none;" onclick="create_room()">Crear</button>
+                    <button id="room_id_link" class="journal_link_button" style="display: none;" onclick="link_room()">Unirse</button>
+                    <button id="room_id_disconnect" class="journal_link_button" style="display: none;" onclick="disconnect_room()">Desconectar</button>
                 </div>
             </div>
-            <div id="room_id_note" class="modifier_note">(STATUS: Not connected)</div>
+            <div id="room_id_note" class="modifier_note">(Estado: No conectado)</div>
             <hr>
             <div class="modifier_volume yfont white">
-                Desktop Link
+                Enlace de escritorio
                 <a class="download" href="assets/ZN-Desktop-Link-Installer-v2.1.0.msi" download="ZN-Desktop-Link-Installer-v2.1.0.msi"><img class="download_icon" src="imgs/download.png" alt="Download ZN-Desktop-Link"></a>
             </div>
             <div class="journal_link">
                 <input type="text" placeholder="DL-XXXXX" id="link_id" class="text" value="DL-XXXXX" disabled style="color:#444;">
-                <div id="link_id_cover" class="copy_cover" style="display:none;">Copied!</div>
+                <div id="link_id_cover" class="copy_cover" style="display:none;">¡Copiado!</div>
                 <img class="clipboard_icon" src="imgs/copy.png" onclick="copy_code()">
                 <div class="journal_link_buttons">
-                    <button id="link_id_create" class="journal_link_button" style="display: none;" onclick="create_link()">Create</button>
-                    <button id="link_id_disconnect" class="journal_link_button" style="display: none;" onclick="disconnect_link()">Disconnect</button>
+                    <button id="link_id_create" class="journal_link_button" style="display: none;" onclick="create_link()">Crear</button>
+                    <button id="link_id_disconnect" class="journal_link_button" style="display: none;" onclick="disconnect_link()">Desconectar</button>
                 </div>
             </div>
-            <div id="link_id_note" class="modifier_note">(STATUS: Not linked)</div>
+            <div id="link_id_note" class="modifier_note">(Estado: No vinculado)</div>
         </div>
         <div id="session">-</div>
     </div>
 
     <div id="event_box" style="left:-182px;">
-        <div id="event_tab" onclick="showEvent()">Current Event</div>
+        <div id="event_tab" onclick="showEvent()">Evento actual</div>
         <span class="icon" onclick="showEvent()"></span>
-        <div class="settings_title yfont white">Current Event</div>
+        <div class="settings_title yfont white">Evento actual</div>
         <div class="info_block">
-            <div id="event_title">No current events!</div>
+            <div id="event_title">¡No hay eventos actualmente!</div>
             <hr>
             <div id="event_details">
-                Check back on the next update!
+                ¡Compruébalo en la siguiente actualización!
             </div>
         </div>
     </div>
 
     <div id="wiki_box" style="left: -1000px;">
-        <div id="wiki_tab" onclick="showWiki();setFlicker();">Guides<div id="guide_tab_footstep" style="display: none;"></div></div>
+        <div id="wiki_tab" onclick="showWiki();setFlicker();">Guías<div id="guide_tab_footstep" style="display: none;"></div></div>
         <span class="icon" onclick="showWiki();setFlicker();"></span>
-        <div class="settings_title yfont white">Guides</div>
+        <div class="settings_title yfont white">Guías</div>
         <div id="wiki-body" class="info_block"></div>
     </div>
 
     <div id="maps_box" style="left: -1000px;">
-        <div id="maps_tab" onclick="showMaps()">Maps</div>
+        <div id="maps_tab" onclick="showMaps()">Mapas</div>
         <span class="icon" onclick="showMaps()"></span>
 
-        <div class="maps_title yfont white">Maps</div>
+        <div class="maps_title yfont white">Mapas</div>
         <div class="maps_image" onmouseenter="zoomMap(this)" onmouseleave="unZoomMap(this)" onmousemove="moveZoom(this,event)">
             <div class="map_image"></div>
-            <div class="hover_zoom">+ Hover to zoom</div>
+            <div class="hover_zoom">+ por encima para zoom</div>
         </div>
-        <div class="maps_credit">Map images belong to <a href="https://www.reddit.com/user/Fantismal" target="_blank">Fantismal</a> (<a href="https://imgur.com/a/iEI0tJo" target="_blank">Images</a>)</div>
+        <div class="maps_credit">Los mapas pertenecen a <a href="https://www.reddit.com/user/Fantismal" target="_blank">Fantismal</a> (<a href="https://imgur.com/a/iEI0tJo" target="_blank">Imagenes</a>)</div>
         <div class="maps_buttons">
             <button class="maps_button selected_map" id="tanglewood" onclick="changeMap(this,'tanglewood.png')"><div class="map_size s">S</div>6 Tanglewood Drive</button>
             <button class="maps_button" id="edgefield" onclick="changeMap(this,'edgefield.png')"><div class="map_size s">S</div>42 Edgefield Road</button>
@@ -274,19 +274,19 @@
     <div class="data">
         <div class="menu">
             <div class="tools-filter-buttons">
-                <button id="show_filter_button" class="filter_tool_button filter_tool_button_live">Filters</button>
-                <button id="show_tool_button" class="filter_tool_button filter_tool_button_back" onclick="toggleFilterTools()">Tools</button>
+                <button id="show_filter_button" class="filter_tool_button filter_tool_button_live">Filtros</button>
+                <button id="show_tool_button" class="filter_tool_button filter_tool_button_back" onclick="toggleFilterTools()">Herramientas</button>
             </div>
             <div id="tools-content" class="tools-content" style="display: none;">
                 <div class="timer_title yfont white">
-                    Timers
+                    Temporizadores
                 </div>
                 <div class="timers">
                     <div class="timer_block">
-                        <div class="modifier_smudge_timer yfont white" onclick="toggle_timer()">Smudge Timer</div>
+                        <div class="modifier_smudge_timer yfont white" onclick="toggle_timer()">Temporizador de incienso</div>
                         <div class="line_labels" onclick="toggle_timer();send_timer();">
-                            <div class="spirit_line_label">Spirit</div>
-                            <div class="demon_line_label">Demon</div>
+                            <div class="spirit_line_label">Espíritu</div>
+                            <div class="demon_line_label">Demonio</div>
                         </div>
                         <div id="progress" onclick="toggle_timer();send_timer();">
                             <img src="imgs/play.png" id="play_button" class="play_button">
@@ -300,13 +300,13 @@
                         <div id="time_left" onclick="toggle_timer();send_timer();">
                             <span id="minute">03</span>:<span id="second">00</span>
                         </div>
-                        <div class="modifier_note_2" onclick="toggle_timer();send_timer();">(Press 'T' to start/stop)</div>
+                        <div class="modifier_note_2" onclick="toggle_timer();send_timer();">(Presiona 'T' para iniciar/detener)</div>
                     </div>
                     <hr>
                     <div class="timer_block">
-                        <div class="modifier_smudge_timer yfont white" onclick="toggle_cooldown_timer()">Cooldown Timer</div>
+                        <div class="modifier_smudge_timer yfont white" onclick="toggle_cooldown_timer()">Temporizador</div>
                         <div class="line_labels" onclick="toggle_cooldown_timer();send_cooldown_timer();">
-                            <div class="cooldown_demon_line_label">Demon</div>
+                            <div class="cooldown_demon_line_label">Demonio</div>
                         </div>
                         <div id="cooldownProgress" onclick="toggle_cooldown_timer();send_cooldown_timer();">
                             <img src="imgs/play.png" id="play_cooldown_button" class="play_button">
@@ -319,14 +319,14 @@
                         <div id="time_left_cooldown" onclick="toggle_cooldown_timer();send_cooldown_timer();">
                             <span id="minute_cooldown">00</span>:<span id="second_cooldown">25</span>
                         </div>
-                        <div class="modifier_note_2" onclick="toggle_cooldown_timer();send_cooldown_timer();">(Press 'H' to start/stop)</div>
+                        <div class="modifier_note_2" onclick="toggle_cooldown_timer();send_cooldown_timer();">(Presiona 'H' para iniciar/detener)</div>
                     </div>
                 </div>
                 <div class="modifier_title yfont white">
-                    Tools
+                    Herramientas
                 </div>
                 <div class="modifier">
-                    <div class="modifier_ghost_speed yfont white">Ghost Speed</div>
+                    <div class="modifier_ghost_speed yfont white">Velocidad del fantasma</div>
                     <input type="range" id="ghost_modifier_speed" name="volume" 
                         min="0" max="4" step="1" default="2" onchange="setTempo();bpm_calc(true);saveSettings();send_state();">
                     <div class="modifier_ghost_speed_labels">
@@ -344,39 +344,39 @@
                         </label>
                         <img src="imgs/metronome.png">
                     </div>
-                    <div class="modifier_note">(Click <span class="sound" onclick="toggleSound(1.7,'spirit0')">&#128266;</span> on cards to hear speed)</div>
+                    <div class="modifier_note">(Haz click en <span class="sound" onclick="toggleSound(1.7,'spirit0')">&#128266;</span>para oir la velocidad)</div>
                     <hr>
-                    <div class="modifier_bpm_finder yfont white">BPM Finder</div>
+                    <div class="modifier_bpm_finder yfont white">Descubrir BPM</div>
                     <button id="tap" class="yfont" onclick="bpm_tap()">
                         <div id="input_bpm">0<br>bpm</div>
-                        <div>Tap<div class="tap_note">(or press 'F')</div></div>
+                        <div>Click<div class="tap_note">(o presiona 'F')</div></div>
                         <div id="input_speed">0<br>m/s</div>
                     </button>
                     <div id="tap_viz"></div>
-                    <div class="modifier_note_2">(Press 'R' to reset)</div>
+                    <div class="modifier_note_2">(Presiona 'R' para reiniciar)</div>
                 </div>
             </div>
             <div id="filter-content" class="filter-content">
                 <div class="evidence_title yfont white">
-                    Evidence <select name="num_evidence" id="num_evidence" class="num_evidence" onchange="filter();flashMode();saveSettings();">
+                    Evidencias <select name="num_evidence" id="num_evidence" class="num_evidence" onchange="filter();flashMode();saveSettings();">
                         <option value="3">3</option>
                         <option value="2">2</option>
                         <option value="1">1</option>
                         <option value="0">0</option>
                     </select>
                 </div>
-                <div id="game_mode" class="yfont white" style="display:none;">Insanity</div>
+                <div id="game_mode" class="yfont white" style="display:none;">Demencia</div>
                 <div id="evidence" class="evidence">
                     <div class="dot-flashing"></div>
                 </div>
 
                 <div class="speed_title yfont white">
-                    Speed
+                    Velocidad
                 </div>
                 <div class="speed">
                     <button id="Slow" class="tricheck white" name="speed" onclick="dualstate(this)" value="Slow">
                         <div id="checkbox" class="neutral"><span class="icon"></span></div>
-                        <div class="label">Slow</div>
+                        <div class="label">Lento</div>
                     </button>
                     <button id="Normal" class="tricheck white" name="speed" onclick="dualstate(this)" value="Normal">
                         <div id="checkbox" class="neutral"><span class="icon"></span></div>
@@ -384,21 +384,21 @@
                     </button>
                     <button id="Fast" class="tricheck white" name="speed" onclick="dualstate(this)" value="Fast">
                         <div id="checkbox" class="neutral"><span class="icon"></span></div>
-                        <div class="label">Fast</div>
+                        <div class="label">Rapido</div>
                     </button>
                     <hr>
                     <button id="LOS" class="tricheck white" name="los" onclick="tristate(this)" value="LOS">
                         <div id="checkbox" class="neutral"><span class="icon"></span></div>
-                        <div class="label label-font-s">Std. LOS Speed Up</div>
+                        <div class="label label-font-s">Velocidad estándar de LDV</div>
                     </button>
                 </div>
                 <div class="hunt_sanity_title yfont white">
-                    Hunt Sanity
+                    Cordura de ataque
                 </div>
                 <div class="hunt_sanity">
                     <button id="Late" class="tricheck white" name="hunt-sanity" onclick="dualstate(this,false,true)" value="Late">
                         <div id="checkbox" class="neutral"><span class="icon"></span></div>
-                        <div class="label">Late <span class="hunt_sanity_num">(&lt;40%)</span></div>
+                        <div class="label">Tarde <span class="hunt_sanity_num">(&lt;40%)</span></div>
                     </button>
                     <button id="Average" class="tricheck white" name="hunt-sanity" onclick="dualstate(this,false,true)" value="Average">
                         <div id="checkbox" class="neutral"><span class="icon"></span></div>
@@ -406,18 +406,18 @@
                     </button>
                     <button id="Early" class="tricheck white" name="hunt-sanity" onclick="dualstate(this,false,true)" value="Early">
                         <div id="checkbox" class="neutral"><span class="icon"></span></div>
-                        <div class="label">Early <span class="hunt_sanity_num">(>50%)</span></div>
+                        <div class="label">Temprano <span class="hunt_sanity_num">(>50%)</span></div>
                     </button>
                     <button id="VeryEarly" class="tricheck white" name="hunt-sanity" onclick="dualstate(this,false,true)" value="VeryEarly">
                         <div id="checkbox" class="neutral"><span class="icon"></span></div>
-                        <div class="label">Very Early <span class="hunt_sanity_num">(>75%)</span></div>
+                        <div class="label">Muy temprano <span class="hunt_sanity_num">(>75%)</span></div>
                     </button>
                 </div>
 
             </div>
-            <div id="active-users"><span id="current-version-label"></span> | <span id="active-users-label">Active Users: -</span></div>
+            <div id="active-users"><span id="current-version-label"></span> | <span id="active-users-label">Usuarios activos: -</span></div>
             <div class="copyright" onclick="showInfo()"><img class="question" src="imgs/question.png"> Info / Copyright</div>
-            <button id="reset" class="yfont standard_reset" onclick="reset()" onmouseenter="checkResetButton()" onmouseleave="resetResetButton()">Reset</button>
+            <button id="reset" class="yfont standard_reset" onclick="reset()" onmouseenter="checkResetButton()" onmouseleave="resetResetButton()">Reiniciar</button>
 
         </div>
 
@@ -425,7 +425,7 @@
     </div>
 
     <div id="domovoi" style="display: none;">
-        <div id="domovoi-text" style="display: none;">Hello! I am Domo!</div>
+        <div id="domovoi-text" style="display: none;">¡Hola! ¡Soy Domo!</div>
         <img id="domovoi-img" src="imgs/domovoi.png" onmouseenter="domovoi_show_last()" onmouseleave="domovoi_hide_last()" ondblclick="domovoi_print_logs()">
     </div>
     <div id="eye" onclick="revive()"><img src="imgs/eye.png"></div>

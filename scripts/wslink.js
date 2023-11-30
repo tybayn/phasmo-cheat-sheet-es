@@ -4,7 +4,7 @@ let dlws = null
 var ws_ping;
 var dlws_ping;
 var await_dlws_pong = false
-const lang = "en"
+const lang = "es"
 
 function auto_link(){
     var room_id = getCookie("room_id")

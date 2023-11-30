@@ -2,7 +2,7 @@ const ZNLANG = {
     "overall":{
     },
     "ghosts":{
-        "esp ritu":[],
+        "espíritu":[],
         "espectro":[],
         "ente":[],
         "poltergeist":[],

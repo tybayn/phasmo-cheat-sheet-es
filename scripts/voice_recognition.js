@@ -151,7 +151,7 @@ function parse_speech(vtext){
         vtext = vtext.replace('fantasma', "").trim()
         domovoi_msg = " marcado"
 
-        var smallest_ghost = "Esp Ritu"
+        var smallest_ghost = "Espíritu"
         var smallest_val = 100
         var vvalue = 0
         if(vtext.startsWith("no ")){

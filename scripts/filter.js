@@ -975,7 +975,7 @@ function checkResetButton(){
 function resetResetButton(){
     $("#reset").removeClass("reset_pulse")
     $("#reset").addClass("standard_reset")
-    $("#reset").html(polled ? "Waiting for others..." : "Reset")
+    $("#reset").html(polled ? "Waiting for others..." : "Reiniciar")
     $("#reset").attr("ondblclick",null)
     $("#reset").attr("onclick","reset()")
 }
@@ -1110,7 +1110,7 @@ function showNews(){
 
 function flashMode(){
     var cur_evidence = parseInt(document.getElementById("num_evidence").value)
-    var mode_text = ["Apocalipsis","Locura","Pesadilla","Profesional"][cur_evidence]
+    var mode_text = ["Apocalipsis","Demencia","Pesadilla","Profesional"][cur_evidence]
     document.getElementById("game_mode").innerHTML = `${mode_text}<span>(${cur_evidence} evidencia)</span>`
     $("#game_mode").fadeIn(500,function () {
         $("#game_mode").delay(500).fadeOut(500);

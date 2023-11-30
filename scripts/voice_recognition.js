@@ -100,19 +100,19 @@ function parse_speech(vtext){
 
     running_log[cur_idx]["Cleaned"] = vtext
 
-    if(vtext.startsWith('ghost speed')){
+    if(vtext.startsWith('velocidad fantasma')){
         document.getElementById("voice_recognition_status").className = null
         document.getElementById("voice_recognition_status").style.backgroundImage = "url(imgs/mic-recognized.png)"
         console.log("Recognized ghost speed command")
-        running_log[cur_idx]["Type"] = "ghost speed"
+        running_log[cur_idx]["Type"] = "velocidad fantasma"
         console.log(`Heard '${vtext}'`)
         vtext = vtext.replace('ghost speed', "").trim()
-        domovoi_msg += "marked ghost speed as "
+        domovoi_msg += "velocidad fantasma marcada como "
 
-        vtext = vtext.replace('three','3')
-        vtext = vtext.replace('two','2').replace('to','2')
-        vtext = vtext.replace('one','1')
-        vtext = vtext.replace('zero','0')
+        vtext = vtext.replace('tres','3')
+        vtext = vtext.replace('dos','2')
+        vtext = vtext.replace('uno','1')
+        vtext = vtext.replace('cero','0')
 
         var smallest_num = '150'
         var smallest_val = 100
@@ -142,52 +142,52 @@ function parse_speech(vtext){
         running_log[cur_idx]["Domo"] = domovoi_msg
         reset_voice_status()
     }
-    else if(vtext.startsWith('ghost')){
+    else if(vtext.startsWith('fantasma')){
         document.getElementById("voice_recognition_status").className = null
         document.getElementById("voice_recognition_status").style.backgroundImage = "url(imgs/mic-recognized.png)"
         console.log("Recognized ghost command")
-        running_log[cur_idx]["Type"] = "ghost"
+        running_log[cur_idx]["Type"] = "fantasma"
         console.log(`Heard '${vtext}'`)
-        vtext = vtext.replace('ghost', "").trim()
-        domovoi_msg += "marked "
+        vtext = vtext.replace('fantasma', "").trim()
+        domovoi_msg = " marcado"
 
-        var smallest_ghost = "Spirit"
+        var smallest_ghost = "Esp Ritu"
         var smallest_val = 100
         var vvalue = 0
-        if(vtext.startsWith("not ") || vtext.startsWith("knot ") || vtext.startsWith("knight ")|| vtext.startsWith("night ")){
-            vtext = vtext.replace('knot ', "").replace('not ', "").replace('knight ', "").replace('night ', "").trim()
+        if(vtext.startsWith("no ")){
+            vtext = vtext.replace('no ').trim()
             vvalue = 0
-            domovoi_msg += "not "
+            domovoi_msg += "no "
         }
-        else if(vtext.startsWith("undo ") || vtext.startsWith("undue ") || vtext.startsWith("on do ") || vtext.startsWith("on due ") || vtext.startsWith("clear")){
-            vtext = vtext.replace('undo ', "").replace('undue ', "").replace("on do ","").replace("on due ","").replace("clear ","").trim()
+        else if(vtext.startsWith("deshacer ")){
+            vtext = vtext.replace('deshacer ', "").trim()
             vvalue = 0
-            domovoi_msg = "cleared "
+            domovoi_msg = " limpio"
         }
-        else if(vtext.startsWith("guess ")){
-            vtext = vtext.replace('guess ', "").trim()
+        else if(vtext.startsWith("adivina ")){
+            vtext = vtext.replace('adivina ', "").trim()
             vvalue = 3
-            domovoi_msg = "guessed "
+            domovoi_msg = " adivinado"
         }
         else if(vtext.startsWith("select ") || vtext.startsWith("deselect ")){
             vtext = vtext.replace('deselect ', "").replace('select ', "").trim()
             vvalue = 2
-            domovoi_msg = "selected "
+            domovoi_msg = " selected"
         }
         else if(vtext.startsWith("hide ") || vtext.startsWith("remove ") || vtext.startsWith("removes ")){
             vtext = vtext.replace('hide ', "").replace('removes ', "").replace('remove ', "").trim()
             vvalue = -1
-            domovoi_msg = "removed "
+            domovoi_msg = " removed"
         }
         else if(vtext.startsWith("dead ") || vtext.startsWith("killed by ") || vtext.startsWith("killed ")){
             vtext = vtext.replace('dead ', "").replace('killed by ', "").replace('killed ', "").trim()
             vvalue = -2
-            domovoi_msg = "killed by "
+            domovoi_msg = " killed by"
         }
         else if(vtext.startsWith("show ") || vtext.startsWith("data ") || vtext.startsWith("info ")){
             vtext = vtext.replace('show ', "").replace('data ', "").replace('info ', "").trim()
             vvalue = -10
-            domovoi_msg = "showing info for "
+            domovoi_msg = " showing info for"
         }
 
         // Common fixes to ghosts
@@ -717,7 +717,7 @@ if (("webkitSpeechRecognition" in window || "speechRecognition" in window) && !n
   
     speechRecognition.continuous = false;
     speechRecognition.interimResults = false;
-    speechRecognition.lang = 'en-US';
+    speechRecognition.lang = 'es';
   
     speechRecognition.onend = () => {
         if(!stop_listen){

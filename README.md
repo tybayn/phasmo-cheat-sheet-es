@@ -1,6 +1,6 @@
-# Unofficial Phasmo Cheat Sheet (template)
+# Unofficial Phasmo Cheat Sheet (Spanish Translation)
 
-A client facing web-app guide for the horror video game Phasmophobia. This repo is intended to be forked and translated into other languages.
+A client facing web-app guide for the horror video game Phasmophobia. This repo has been translated from English to Spanish by ZxFrankxZ.
 
 In order to make this version work with other languages, the following features from the original have been removed:
 - Discord Link

@@ -21,7 +21,7 @@ let ghost_flicker_data = {
         "invis_max":1.0,
         "invis_min":0.3
     },
-    "Phantom":{
+    "Ente":{
         "vis_max":0.3,
         "vis_min":0.08,
         "invis_max":2.0,

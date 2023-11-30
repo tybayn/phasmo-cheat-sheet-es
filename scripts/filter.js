@@ -3,11 +3,11 @@ function setCookie(e,t,i){let n=new Date;n.setTime(n.getTime()+864e5*i);let o="e
 
 const all_evidence = ["DOTs","EMF 5","Ultravioleta","Temperaturas","Orbes espectrales","Escritura","Spirit Box"]
 const all_ghosts = ["Espíritu","Espectro","Ente","Poltergeist","Banshee","Jinn","Pesadilla","Revenant","Sombra","Demonio","Yurei","Oni","Yokai","Hantu","Goryo","Myling","Onryo","Gemelos","Raiju","Obake","Mimico","Moroi","Deogen","Thaye"]
-const all_speed = ["Slow","Normal","Fast"]
-const all_sanity = ["Late","Average","Early","VeryEarly"]
+const all_speed = ["Lento","Normal","Rapido"]
+const all_sanity = ["Tarde","Average","Temprano","MuyTemprano"]
 let bpm_list = []
 
-var state = {"evidence":{},"speed":{"Slow":0,"Normal":0,"Fast":0},"los":-1,"sanity":{"Late":0,"Average":0,"Early":0,"VeryEarly":0},"ghosts":{}}
+var state = {"evidence":{},"speed":{"Lento":0,"Normal":0,"Rapido":0},"los":-1,"sanity":{"Tarde":0,"Average":0,"Temprano":0,"MuyTemprano":0},"ghosts":{}}
 var user_settings = {"num_evidences":3,"ghost_modifier":2,"volume":50,"mute_timer_toggle":0,"mute_timer_countdown":0,"offset":0,"sound_type":0,"speed_logic_type":0,"bpm":0,"domo_side":0}
 
 let znid = getCookie("znid")
@@ -297,11 +297,11 @@ function revive(){
 
 function filter(ignore_link=false){
     state["evidence"] = {}
-    state["speed"] = {"Slow":0,"Normal":0,"Fast":0}
+    state["speed"] = {"Lento":0,"Normal":0,"Rapido":0}
     for (var i = 0; i < all_evidence.length; i++){
         state["evidence"][all_evidence[i]] = 0
     }
-    state["sanity"] = {"Late":0,"Average":0,"Early":0,"VeryEarly":0}
+    state["sanity"] = {"Tarde":0,"Average":0,"Temprano":0,"MuyTemprano":0}
     state["los"] = -1
 
     // Get values of checkboxes
@@ -311,7 +311,7 @@ function filter(ignore_link=false){
     var not_evi_array = [];
     var spe_array = [];
     var san_array = [];
-    var san_lookup = {"Late":0,"Average":40,"Early":50,"VeryEarly":75}
+    var san_lookup = {"Tarde":0,"Average":40,"Temprano":50,"MuyTemprano":75}
     var monkey_evi = ""
     if (document.querySelectorAll('[name="evidence"] .monkey-disabled').length > 0)
         monkey_evi = document.querySelectorAll('[name="evidence"] .monkey-disabled')[0].parentElement.value;
@@ -400,11 +400,11 @@ function filter(ignore_link=false){
             parseInt(ghosts[i].getElementsByClassName("ghost_hunt_low")[0].textContent),
             parseInt(ghosts[i].getElementsByClassName("ghost_hunt_high")[0].textContent)
         ]
-        if (name == "The Mimic"){
-            evidence.push("Ghost Orbs")
+        if (name == "Mimico"){
+            evidence.push("Orbes espectrales")
             mimic_evi = evidence
-            nm_evidence = "Ghost Orbs"
-            mimic_nm_evi = "Ghost Orbs"
+            nm_evidence = "Orbes espectrales"
+            mimic_nm_evi = "Orbes espectrales"
         }
 
         //Check for monkey paw filter
@@ -413,7 +413,7 @@ function filter(ignore_link=false){
         }
 
         //Check for los filter
-        if (name != "The Mimic" && speed_has_los != -1 && speed_has_los != has_los){
+        if (name != "Mimico" && speed_has_los != -1 && speed_has_los != has_los){
             loskeep = false
         }
         
@@ -442,7 +442,7 @@ function filter(ignore_link=false){
         else if (num_evidences == "2"){
 
 
-            if (evi_array.length == 3 && name != "The Mimic"){
+            if (evi_array.length == 3 && name != "Mimico"){
                 keep = false
             }
             else if (evi_array.length > 0){
@@ -471,7 +471,7 @@ function filter(ignore_link=false){
         // Insanity
         else if (num_evidences == "1"){
 
-            if (evi_array.length == 2 && name != "The Mimic"){
+            if (evi_array.length == 2 && name != "Mimico"){
                 keep = false
             }
             else if (evi_array.length > 0){
@@ -500,11 +500,11 @@ function filter(ignore_link=false){
         // Apocalypse
         else if (num_evidences == "0"){
 
-            if (evi_array.length > 0 && name != "The Mimic"){
+            if (evi_array.length > 0 && name != "Mimico"){
                 keep = false
             }
 
-            if (not_evi_array.length > 0 && name == "The Mimic"){
+            if (not_evi_array.length > 0 && name == "Mimico"){
                 keep = false
             }
         }
@@ -544,19 +544,19 @@ function filter(ignore_link=false){
         if (spe_array.length > 0){
             var skeep = false,nkeep = false,fkeep = false;
 
-            var shas = (min_speed < base_speed || name == "The Mimic")
-            var nhas = (speed_type == "or" && (min_speed === base_speed || max_speed === base_speed || name == "The Mimic")) || (speed_type == "range" && min_speed <= base_speed && base_speed <= max_speed)
-            var fhas = (max_speed > base_speed || name == "The Mimic")
+            var shas = (min_speed < base_speed || name == "Mimico")
+            var nhas = (speed_type == "or" && (min_speed === base_speed || max_speed === base_speed || name == "Mimico")) || (speed_type == "range" && min_speed <= base_speed && base_speed <= max_speed)
+            var fhas = (max_speed > base_speed || name == "Mimico")
 
             spe_array.forEach(function (item,index){
 
-                if (item == "Slow"){
+                if (item == "Lento"){
                     skeep = true
                 }
                 else if (item == "Normal"){
                     nkeep = true
                 }
-                else if (item == "Fast"){
+                else if (item == "Rapido"){
                     fkeep = true
                 }
             });
@@ -578,14 +578,14 @@ function filter(ignore_link=false){
 
         // Check if speed is being kept
         if (keep && loskeep){
-            if(min_speed < base_speed || name == "The Mimic"){
-                keep_speed.add('Slow')
+            if(min_speed < base_speed || name == "Mimico"){
+                keep_speed.add('Lento')
                 if (marked_not)
-                    fade_speed.add('Slow')
+                    fade_speed.add('Lento')
                 else
-                    not_fade_speed.add('Slow')
+                    not_fade_speed.add('Lento')
             }
-            if ((speed_type == "range" && min_speed <= base_speed && base_speed <= max_speed) || name == "The Mimic"){
+            if ((speed_type == "range" && min_speed <= base_speed && base_speed <= max_speed) || name == "Mimico"){
                 keep_speed.add('Normal')
                 if (marked_not)
                     fade_speed.add('Normal')
@@ -599,20 +599,20 @@ function filter(ignore_link=false){
                 else
                     not_fade_speed.add('Normal')
             }
-            if(max_speed > base_speed || name == "The Mimic"){
-                keep_speed.add('Fast')
+            if(max_speed > base_speed || name == "Mimico"){
+                keep_speed.add('Rapido')
                 if (marked_not)
-                    fade_speed.add('Fast')
+                    fade_speed.add('Rapido')
                 else
-                    not_fade_speed.add('Fast')
+                    not_fade_speed.add('Rapido')
             }
 
-            if(sanity[0] > san_lookup['Late'] || sanity[1] > san_lookup['Late']){
-                keep_sanity.add('Late')
+            if(sanity[0] > san_lookup['Tarde'] || sanity[1] > san_lookup['Tarde']){
+                keep_sanity.add('Tarde')
                 if (marked_not)
-                    fade_sanity.add('Late')
+                    fade_sanity.add('Tarde')
                 else
-                    not_fade_sanity.add('Late')
+                    not_fade_sanity.add('Tarde')
             }
             if(sanity[0] > san_lookup['Average'] || sanity[1] > san_lookup['Average']){
                 keep_sanity.add('Average')
@@ -621,19 +621,19 @@ function filter(ignore_link=false){
                 else
                     not_fade_sanity.add('Average')
             }
-            if(sanity[0] > san_lookup['Early'] || sanity[1] > san_lookup['Early']){
-                keep_sanity.add('Early')
+            if(sanity[0] > san_lookup['Temprano'] || sanity[1] > san_lookup['Temprano']){
+                keep_sanity.add('Temprano')
                 if (marked_not)
-                    fade_sanity.add('Early')
+                    fade_sanity.add('Temprano')
                 else
-                    not_fade_sanity.add('Early')
+                    not_fade_sanity.add('Temprano')
             }
-            if(sanity[0] > san_lookup['VeryEarly'] || sanity[1] > san_lookup['VeryEarly']){
-                keep_sanity.add('VeryEarly')
+            if(sanity[0] > san_lookup['MuyTemprano'] || sanity[1] > san_lookup['MuyTemprano']){
+                keep_sanity.add('MuyTemprano')
                 if (marked_not)
-                    fade_sanity.add('VeryEarly')
+                    fade_sanity.add('MuyTemprano')
                 else
-                    not_fade_sanity.add('VeryEarly')
+                    not_fade_sanity.add('MuyTemprano')
             }
         }
 
@@ -778,7 +778,7 @@ function filter(ignore_link=false){
     }
 
     else if (num_evidences == "0"){
-        all_evidence.filter(evi => evi != 'Ghost Orbs').forEach(function(item){
+        all_evidence.filter(evi => evi != 'Orbes espectrales').forEach(function(item){
             var checkbox = document.getElementById(item);
             $(checkbox).addClass("block")
             $(checkbox).find("#checkbox").removeClass(["good","bad","faded"])
@@ -999,17 +999,17 @@ function showVoiceInfo(){
 
 function showSettings(){
     mquery = window.matchMedia("screen and (pointer: coarse) and (max-device-width: 600px)")
-    if (document.getElementById("settings_box").style.left == (mquery.matches ? "calc(-60% - 40px)" : "-32px")){
+    if (document.getElementById("settings_box").style.left == (mquery.matches ? "calc(-60% - 40px)" : "10px")){
         document.getElementById("settings_box").style.boxShadow = "5px 0px 10px 0px #000"
         document.getElementById("settings_tab").style.boxShadow = "-6px 5px 5px -2px #000"
         document.getElementById("event_box").style.zIndex= "1"
         document.getElementById("wiki_box").style.zIndex= "1"
         document.getElementById("maps_box").style.zIndex= "1"
         document.getElementById("settings_box").style.zIndex = (mquery.matches ? "10" : "2")
-        document.getElementById("settings_box").style.left = (mquery.matches ? "0px" : "196px")
+        document.getElementById("settings_box").style.left = (mquery.matches ? "0px" : "238px")
     }
     else {
-        document.getElementById("settings_box").style.left = (mquery.matches ? "calc(-60% - 40px)" : "-32px")
+        document.getElementById("settings_box").style.left = (mquery.matches ? "calc(-60% - 40px)" : "10px")
         document.getElementById("settings_box").style.boxShadow = "none"
         document.getElementById("settings_tab").style.boxShadow = "none"
         if(mquery.matches){
@@ -1023,17 +1023,17 @@ function showSettings(){
 
 function showEvent(){
     mquery = window.matchMedia("screen and (pointer: coarse) and (max-device-width: 600px)")
-    if (document.getElementById("event_box").style.left == (mquery.matches ? "calc(-60% - 40px)" : "-182px")){
+    if (document.getElementById("event_box").style.left == (mquery.matches ? "calc(-60% - 40px)" : "-140px")){
         document.getElementById("event_box").style.boxShadow = "5px 0px 10px 0px #000"
         document.getElementById("event_tab").style.boxShadow = "-6px 5px 5px -2px #000"
         document.getElementById("settings_box").style.zIndex = "1"
         document.getElementById("wiki_box").style.zIndex= "1"
         document.getElementById("maps_box").style.zIndex= "1"
         document.getElementById("event_box").style.zIndex= (mquery.matches ? "10" : "2")
-        document.getElementById("event_box").style.left = (mquery.matches ? "0px" : "196px")
+        document.getElementById("event_box").style.left = (mquery.matches ? "0px" : "238px")
     }
     else {
-        document.getElementById("event_box").style.left = (mquery.matches ? "calc(-60% - 40px)" : "-182px")
+        document.getElementById("event_box").style.left = (mquery.matches ? "calc(-60% - 40px)" : "-140px")
         document.getElementById("event_box").style.boxShadow = "none"
         document.getElementById("event_tab").style.boxShadow = "none"
         if(mquery.matches){
@@ -1047,17 +1047,17 @@ function showEvent(){
 
 function showWiki(){
     mquery = window.matchMedia("screen and (pointer: coarse) and (max-device-width: 600px)")
-    if (document.getElementById("wiki_box").style.left == (mquery.matches ? "calc(-60% - 40px)" : "-182px")){
+    if (document.getElementById("wiki_box").style.left == (mquery.matches ? "calc(-60% - 40px)" : "-140px")){
         document.getElementById("wiki_box").style.boxShadow = "5px 0px 10px 0px #000"
         document.getElementById("wiki_tab").style.boxShadow = "-6px 5px 5px -2px #000"
         document.getElementById("settings_box").style.zIndex = "1"
         document.getElementById("event_box").style.zIndex= "1"
         document.getElementById("maps_box").style.zIndex= "1"
         document.getElementById("wiki_box").style.zIndex= (mquery.matches ? "10" : "2")
-        document.getElementById("wiki_box").style.left = (mquery.matches ? "0px" : "196px")
+        document.getElementById("wiki_box").style.left = (mquery.matches ? "0px" : "238px")
     }
     else {
-        document.getElementById("wiki_box").style.left = (mquery.matches ? "calc(-60% - 40px)" : "-182px")
+        document.getElementById("wiki_box").style.left = (mquery.matches ? "calc(-60% - 40px)" : "-140px")
         document.getElementById("wiki_box").style.boxShadow = "none"
         document.getElementById("wiki_tab").style.boxShadow = "none"
         if(mquery.matches){
@@ -1076,19 +1076,19 @@ function showMaps(forceOpen = false, forceClose = false){
         return
     }
 
-    if (document.getElementById("maps_box").style.left == "-388px" && !forceClose){
+    if (document.getElementById("maps_box").style.left == "-346px" && !forceClose){
         document.getElementById("maps_box").style.boxShadow = "5px 0px 10px 0px #000"
         document.getElementById("maps_box").style.boxShadow = "-6px 5px 5px -2px #000"
         document.getElementById("settings_box").style.zIndex = "1"
         document.getElementById("event_box").style.zIndex= "1"
         document.getElementById("wiki_box").style.zIndex= "1"
         document.getElementById("maps_box").style.zIndex= "2"
-        document.getElementById("maps_box").style.left = "196px"
-        document.getElementById("maps_box").style.width = "calc(100% - 256px)"
+        document.getElementById("maps_box").style.left = "238px"
+        document.getElementById("maps_box").style.width = "calc(100% - 298px)"
     }
     else if(!forceOpen) {
         document.getElementById("maps_box").style.width = "556px"
-        document.getElementById("maps_box").style.left = "-388px"
+        document.getElementById("maps_box").style.left = "-346px"
         document.getElementById("maps_box").style.boxShadow = "none"
         document.getElementById("maps_box").style.boxShadow = "none"
     }
@@ -1110,8 +1110,8 @@ function showNews(){
 
 function flashMode(){
     var cur_evidence = parseInt(document.getElementById("num_evidence").value)
-    var mode_text = ["Apocalypse","Insanity","Nightmare","Professional"][cur_evidence]
-    document.getElementById("game_mode").innerHTML = `${mode_text}<span>(${cur_evidence} evidence)</span>`
+    var mode_text = ["Apocalipsis","Locura","Pesadilla","Profesional"][cur_evidence]
+    document.getElementById("game_mode").innerHTML = `${mode_text}<span>(${cur_evidence} evidencia)</span>`
     $("#game_mode").fadeIn(500,function () {
         $("#game_mode").delay(500).fadeOut(500);
       });

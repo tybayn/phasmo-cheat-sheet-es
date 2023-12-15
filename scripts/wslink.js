@@ -301,6 +301,7 @@ function link_link(){
                     send_timer_link("TIMER_VAL","0:00")
                     send_timer_link("COOLDOWN_VAL","0:00")
                     filter()
+                    await_dlws_pong = false
                     dlws_ping = setInterval(function(){
                         if (await_dlws_pong){
                             clearInterval(dlws_ping)
@@ -309,6 +310,7 @@ function link_link(){
                             $("#link_id_disconnect").hide()
                             document.getElementById("link_id_note").innerText = "ERROR: Link Lost Connection!"
                             document.getElementById("dllink_status").className = "error"
+                            document.getElementById("link_id").value = ""
                             setCookie("link_id","",-1)
                             hasDLLink=false
                             dlws.close()

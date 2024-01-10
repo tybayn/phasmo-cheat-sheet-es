@@ -1,11 +1,12 @@
 function getCookie(e){let t=e+"=",i=decodeURIComponent(document.cookie).split(";");for(let n=0;n<i.length;n++){let o=i[n];for(;" "==o.charAt(0);)o=o.substring(1);if(0==o.indexOf(t))return o.substring(t.length,o.length)}return""}
 function setCookie(e,t,i){let n=new Date;n.setTime(n.getTime()+864e5*i);let o="expires="+n.toUTCString();document.cookie=e+"="+t+";"+o+";path=/"}
 
-const all_evidence = ["DOTs","EMF 5","Ultravioleta","Temperaturas","Orbes espectrales","Escritura","Spirit Box"]
-const all_ghosts = ["Espíritu","Espectro","Ente","Poltergeist","Banshee","Jinn","Pesadilla","Revenant","Sombra","Demonio","Yurei","Oni","Yokai","Hantu","Goryo","Myling","Onryo","Gemelos","Raiju","Obake","Mimico","Moroi","Deogen","Thaye"]
 const all_speed = ["Lento","Normal","Rapido"]
 const all_sanity = ["Tarde","Average","Temprano","MuyTemprano"]
+let all_evidence = []
+let all_ghosts = []
 let bpm_list = []
+let bpm_los_list = []
 
 var state = {"evidence":{},"speed":{"Lento":0,"Normal":0,"Rapido":0},"los":-1,"sanity":{"Tarde":0,"Average":0,"Temprano":0,"MuyTemprano":0},"ghosts":{}}
 var user_settings = {"num_evidences":3,"ghost_modifier":2,"volume":50,"mute_timer_toggle":0,"mute_timer_countdown":0,"offset":0,"sound_type":0,"speed_logic_type":0,"bpm":0,"domo_side":0}
@@ -62,6 +63,7 @@ function toggleFilterTools(){
             $('#filter-content').removeClass('spin_hide')
             $('#tools-content').addClass('spin_show')
             $('#tools-content').toggle()
+            draw_graph(false)
         },150)
     }
 }
@@ -1096,6 +1098,8 @@ function showMaps(forceOpen = false, forceClose = false){
 
 function showNews(){
     if (document.getElementById("news_box").style.right == "-366px"){
+        document.getElementById("language_box").style.zIndex = "9"
+        document.getElementById("news_box").style.zIndex = "11"
         document.getElementById("news_box").style.boxShadow = "-5px 0px 10px 0px #000"
         document.getElementById("news_tab").style.boxShadow = "-5px 6px 5px -2px #000"
         document.getElementById("news_box").style.right = "0px"
@@ -1105,6 +1109,23 @@ function showNews(){
         document.getElementById("news_box").style.right = "-366px"
         document.getElementById("news_box").style.boxShadow = "none"
         document.getElementById("news_box").style.boxShadow = "none"
+    }
+}
+
+function showLanguage(){
+    if (document.getElementById("language_box").style.right == "-176px"){
+        // document.getElementById("news_box").style.zIndex = "9"
+        document.getElementById("language_box").style.zIndex = "11"
+        document.getElementById("language_box").style.boxShadow = "-5px 0px 10px 0px #000"
+        document.getElementById("language_tab").style.boxShadow = "-5px 6px 5px -2px #000"
+        document.getElementById("language_box").style.right = "0px"
+        $("#lang_blackout").fadeIn(500)
+    }
+    else {
+        document.getElementById("language_box").style.right = "-176px"
+        document.getElementById("language_box").style.boxShadow = "none"
+        document.getElementById("language_box").style.boxShadow = "none"
+        $("#lang_blackout").fadeOut(500)
     }
 }
 
@@ -1124,7 +1145,7 @@ function saveSettings(reset = false){
     user_settings['offset'] = parseInt(document.getElementById("offset_value").innerText.replace(/\d+(?:-\d+)+/g,""))
     user_settings['ghost_modifier'] = parseInt(document.getElementById("ghost_modifier_speed").value)
     user_settings['num_evidences'] = parseInt(document.getElementById("num_evidence").value)
-    user_settings['sound_type'] = document.getElementById("modifier_sound_type").checked ? 1 : 0;
+    user_settings['sound_type'] = document.getElementById("modifier_sound_type").value;
     user_settings['speed_logic_type'] = document.getElementById("speed_logic_type").checked ? 1 : 0;
     user_settings['bpm_type'] = document.getElementById("bpm_type").checked ? 1 : 0;
     user_settings['bpm'] = reset ? 0 : parseInt(document.getElementById('input_bpm').innerHTML.split("<br>")[0])
@@ -1144,7 +1165,7 @@ function loadSettings(){
     document.getElementById("offset_value").innerText = ` ${user_settings['offset'] ?? 0}% `
     document.getElementById("ghost_modifier_speed").value = user_settings['ghost_modifier'] ?? 2
     document.getElementById("num_evidence").value = user_settings['num_evidences'] ?? 3
-    document.getElementById("modifier_sound_type").checked = user_settings['sound_type'] ?? 0 == 1
+    document.getElementById("modifier_sound_type").value = user_settings['sound_type'] ?? 0
     document.getElementById("speed_logic_type").checked = user_settings['speed_logic_type'] ?? 0 == 1
     document.getElementById("bpm_type").checked = user_settings['bpm_type'] ?? 0 == 1
     if (user_settings['domo_side'] == 1){
@@ -1195,7 +1216,7 @@ function changeMap(elem,map){
 
     $(".maps_button").removeClass("selected_map")
     $(elem).addClass("selected_map")
-    $(".map_image").css("background-image","url(https://zero-network.net/phasmophobia/static/imgs/maps/"+map+")")
+    $(".map_image").css("background-image","url("+map+")")
 }
 
 function zoomMap(elem){

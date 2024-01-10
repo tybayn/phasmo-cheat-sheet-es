@@ -473,9 +473,7 @@
                 "<Cordura de ataque>",
                 "Puede atacar a partir de 65% de cordura cuando hay jugadores cerca con equipos electrónicos.",
                 "<Velocidad>",
-                "2.5m/s cerca de objetos electrónicos activos, 1.7m/s si no hay objetos electrónicos.",
-                "<Evidencia>",
-                "EMF 5 + Orbes espectrales en Pesadilla confirma Raiju (No tiene evidencia garantizada)."
+                "2.5m/s cerca de objetos electrónicos activos, 1.7m/s si no hay objetos electrónicos."
             ]
         },
         {
@@ -608,9 +606,7 @@
                 "<Cordura de ataque>",
                 "Puede a cazar a partir de 75% cuando es joven, 15% cuando es viejo.",
                 "<Velocidad>",
-                "2.75m/s cuando es joven, 1.0m/s cuando es viejo <b>no aumenta su velocidad cuando esta en linea de visión</b>",
-                "<Evidencia>",
-                "Escritura + DOTs en Pesadilla pueden confirmar al Thaye (no tiene prueba garantizada)"
+                "2.75m/s cuando es joven, 1.0m/s cuando es viejo <b>no aumenta su velocidad cuando esta en linea de visión</b>"
             ]
         }
     ],

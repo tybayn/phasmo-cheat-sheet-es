@@ -470,7 +470,7 @@
                 $("#wiki-body").load("wiki/wiki.html")
                 resolve("Ghost data loaded")
             })
-            Promise.all([load_wiki])
+            Promise.all([load_wiki,checkLink()])
             .then(x => {
                 loadAllAndConnect()
                 if(getCookie("voice_recognition_on")){

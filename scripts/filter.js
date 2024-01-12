@@ -5,6 +5,7 @@ const all_speed = ["Lento","Normal","Rapido"]
 const all_sanity = ["Tarde","Average","Temprano","MuyTemprano"]
 let all_evidence = []
 let all_ghosts = []
+let all_maps = {}
 let bpm_list = []
 let bpm_los_list = []
 

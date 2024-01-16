@@ -352,7 +352,7 @@ hr{
         margin: 2px 0px 10px 0px;
     }
 
-    #settings_box .icon, #discord_link_box .icon, #event_box .icon, #wiki_box .icon, #maps_box .icon, #news_box .icon{
+    #settings_box .icon, #discord_link_box .icon, #event_box .icon, #wiki_box .icon, #maps_box .icon, #news_box .icon, #language_box .icon{
         position: absolute;
         top: 5px;
         right: 4px;
@@ -364,7 +364,7 @@ hr{
         cursor: pointer;
     }
 
-    #settings_box .icon:before, #discord_link_box .icon:before, #event_box .icon:before, #wiki_box .icon:before, #maps_box .icon:before, #news_box .icon:before{
+    #settings_box .icon:before, #discord_link_box .icon:before, #event_box .icon:before, #wiki_box .icon:before, #maps_box .icon:before, #news_box .icon:before, #language_box .icon:before{
         content:"";
         position: absolute;
         width:3px;
@@ -374,7 +374,7 @@ hr{
         top:4px;
     }
 
-    #settings_box .icon:after, #discord_link_box .icon:after, #event_box .icon:after, #wiki_box .icon:after, #maps_box .icon:after, #news_box .icon:after{
+    #settings_box .icon:after, #discord_link_box .icon:after, #event_box .icon:after, #wiki_box .icon:after, #maps_box .icon:after, #news_box .icon:after, #language_box .icon:after{
         content:"";
         position: absolute;
         width:15px;
@@ -664,7 +664,7 @@ hr{
 
     .menu{
         grid-column: 1;
-       display: grid;
+        display: grid;
         width:100%;
         max-height: calc(100vh - 16px);
         grid-template-rows: 40px auto 55px 20px 20px;
@@ -1355,7 +1355,7 @@ hr{
         font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         font-size: 12px;
         text-align: center;
-         width: 30px;
+        width: 30px;
     }
 
     .legend{

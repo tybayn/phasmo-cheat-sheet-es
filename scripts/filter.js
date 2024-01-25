@@ -10,7 +10,7 @@ let bpm_list = []
 let bpm_los_list = []
 
 var state = {"evidence":{},"speed":{"Lento":0,"Normal":0,"Rapido":0},"los":-1,"sanity":{"Tarde":0,"Average":0,"Temprano":0,"MuyTemprano":0},"ghosts":{}}
-var user_settings = {"num_evidences":3,"ghost_modifier":2,"volume":50,"mute_timer_toggle":0,"mute_timer_countdown":0,"offset":0,"sound_type":0,"speed_logic_type":0,"bpm":0,"domo_side":0}
+var user_settings = {"num_evidences":3,"ghost_modifier":2,"volume":50,"mute_timer_toggle":0,"mute_timer_countdown":0,"offset":0,"sound_type":0,"speed_logic_type":0,"bpm":0,"domo_side":0,"theme":"Por defecto"}
 
 let znid = getCookie("znid")
 
@@ -174,7 +174,7 @@ function select(elem,ignore_link=false,internal=false){
     for (const [key, value] of Object.entries(state["ghosts"])){ 
         if(value == 2 || value == -2){
             state['ghosts'][key] = 1
-            document.getElementById(key).className = "ghost_card"
+            $(document.getElementById(key)).removeClass(["died","selected"])
         }
     }
 
@@ -208,7 +208,7 @@ function guess(elem,ignore_link=false,internal=false){
         for (const [key, value] of Object.entries(state["ghosts"])){ 
             if(value == 3){
                 state['ghosts'][key] = 1
-                document.getElementById(key).className = "ghost_card"
+                $(document.getElementById(key)).removeClass(["guessed"])
             }
         }
     }
@@ -238,7 +238,7 @@ function died(elem,ignore_link=false,internal=false){
     for (const [key, value] of Object.entries(state["ghosts"])){ 
         if(value == 2 || value == -2){
             state['ghosts'][key] = 1
-            document.getElementById(key).className = "ghost_card"
+            $(document.getElementById(key)).removeClass(["died","selected"])
         }
     }
 
@@ -291,7 +291,8 @@ function revive(){
     for (const [key, value] of Object.entries(state["ghosts"])){ 
         if(value == -1){
             state['ghosts'][key] = 0
-            document.getElementById(key).className = "ghost_card faded"
+            $(document.getElementById(key)).removeClass(["died","selected","guessed","permhidden"])
+            $(document.getElementById(key)).addClass(["faded"])
             $(document.getElementById(key)).find(".ghost_name").addClass("strike");
         }
     }
@@ -1004,7 +1005,7 @@ function showSettings(){
     mquery = window.matchMedia("screen and (pointer: coarse) and (max-device-width: 600px)")
     if (document.getElementById("settings_box").style.left == (mquery.matches ? "calc(-60% - 40px)" : "10px")){
         document.getElementById("settings_box").style.boxShadow = "5px 0px 10px 0px #000"
-        document.getElementById("settings_tab").style.boxShadow = "-6px 5px 5px -2px #000"
+        document.getElementById("settings_tab").style.boxShadow = "5px 6px 5px -2px #000"
         document.getElementById("event_box").style.zIndex= "1"
         document.getElementById("wiki_box").style.zIndex= "1"
         document.getElementById("maps_box").style.zIndex= "1"
@@ -1028,7 +1029,7 @@ function showEvent(){
     mquery = window.matchMedia("screen and (pointer: coarse) and (max-device-width: 600px)")
     if (document.getElementById("event_box").style.left == (mquery.matches ? "calc(-60% - 40px)" : "-140px")){
         document.getElementById("event_box").style.boxShadow = "5px 0px 10px 0px #000"
-        document.getElementById("event_tab").style.boxShadow = "-6px 5px 5px -2px #000"
+        document.getElementById("event_tab").style.boxShadow = "5px 6px 5px -2px #000"
         document.getElementById("settings_box").style.zIndex = "1"
         document.getElementById("wiki_box").style.zIndex= "1"
         document.getElementById("maps_box").style.zIndex= "1"
@@ -1052,7 +1053,7 @@ function showWiki(){
     mquery = window.matchMedia("screen and (pointer: coarse) and (max-device-width: 600px)")
     if (document.getElementById("wiki_box").style.left == (mquery.matches ? "calc(-60% - 40px)" : "-140px")){
         document.getElementById("wiki_box").style.boxShadow = "5px 0px 10px 0px #000"
-        document.getElementById("wiki_tab").style.boxShadow = "-6px 5px 5px -2px #000"
+        document.getElementById("wiki_tab").style.boxShadow = "5px 6px 5px -2px #000"
         document.getElementById("settings_box").style.zIndex = "1"
         document.getElementById("event_box").style.zIndex= "1"
         document.getElementById("maps_box").style.zIndex= "1"
@@ -1081,13 +1082,13 @@ function showMaps(forceOpen = false, forceClose = false){
 
     if (document.getElementById("maps_box").style.left == "-346px" && !forceClose){
         document.getElementById("maps_box").style.boxShadow = "5px 0px 10px 0px #000"
-        document.getElementById("maps_box").style.boxShadow = "-6px 5px 5px -2px #000"
+        document.getElementById("maps_box").style.boxShadow = "5px 6px 5px -2px #000"
         document.getElementById("settings_box").style.zIndex = "1"
         document.getElementById("event_box").style.zIndex= "1"
         document.getElementById("wiki_box").style.zIndex= "1"
         document.getElementById("maps_box").style.zIndex= "2"
         document.getElementById("maps_box").style.left = "238px"
-        document.getElementById("maps_box").style.width = "calc(100% - 298px)"
+        document.getElementById("maps_box").style.width = "calc(100% - 307px)"
     }
     else if(!forceOpen) {
         document.getElementById("maps_box").style.width = "556px"
@@ -1116,17 +1117,44 @@ function showNews(){
 function showLanguage(){
     if (document.getElementById("language_box").style.right == "-176px"){
         // document.getElementById("news_box").style.zIndex = "9"
+        document.getElementById("theme_box").style.zIndex = "9"
         document.getElementById("language_box").style.zIndex = "11"
         document.getElementById("language_box").style.boxShadow = "-5px 0px 10px 0px #000"
         document.getElementById("language_tab").style.boxShadow = "-5px 6px 5px -2px #000"
         document.getElementById("language_box").style.right = "0px"
-        $("#lang_blackout").fadeIn(500)
+        document.getElementById("lang_blockout").style.zIndex = "10"
+        $("#lang_blockout").fadeIn(500)
     }
     else {
         document.getElementById("language_box").style.right = "-176px"
         document.getElementById("language_box").style.boxShadow = "none"
         document.getElementById("language_box").style.boxShadow = "none"
-        $("#lang_blackout").fadeOut(500)
+        $("#lang_blockout").fadeOut(500)
+        setTimeout(()=>{
+            document.getElementById("lang_blockout").style.zIndex = "-999"
+        },500)
+    }
+}
+
+function showTheme(){
+    if (document.getElementById("theme_box").style.right == "-176px"){
+
+        document.getElementById("language_box").style.zIndex = "9"
+        document.getElementById("theme_box").style.zIndex = "11"
+        document.getElementById("theme_box").style.boxShadow = "-5px 0px 10px 0px #000"
+        document.getElementById("theme_tab").style.boxShadow = "-5px 6px 5px -2px #000"
+        document.getElementById("theme_box").style.right = "0px"
+        document.getElementById("theme_blockout").style.zIndex = "10"
+        $("#theme_blockout").fadeIn(500)
+    }
+    else {
+        document.getElementById("theme_box").style.right = "-176px"
+        document.getElementById("theme_box").style.boxShadow = "none"
+        document.getElementById("theme_box").style.boxShadow = "none"
+        $("#theme_blockout").fadeOut(500)
+        setTimeout(()=>{
+            document.getElementById("theme_blockout").style.zIndex = "-999"
+        },500)
     }
 }
 
@@ -1143,7 +1171,7 @@ function saveSettings(reset = false){
     user_settings['volume'] = parseInt(document.getElementById("modifier_volume").value)
     user_settings['mute_timer_toggle'] = document.getElementById("mute_timer_toggle").checked ? 1 : 0;
     user_settings['mute_timer_countdown'] = document.getElementById("mute_timer_countdown").checked ? 1 : 0;
-    user_settings['offset'] = parseInt(document.getElementById("offset_value").innerText.replace(/\d+(?:-\d+)+/g,""))
+    user_settings['offset'] = parseFloat(document.getElementById("offset_value").innerText.replace(/\d+(?:-\d+)+/g,"")).toFixed(1)
     user_settings['ghost_modifier'] = parseInt(document.getElementById("ghost_modifier_speed").value)
     user_settings['num_evidences'] = parseInt(document.getElementById("num_evidence").value)
     user_settings['sound_type'] = document.getElementById("modifier_sound_type").value;
@@ -1151,19 +1179,21 @@ function saveSettings(reset = false){
     user_settings['bpm_type'] = document.getElementById("bpm_type").checked ? 1 : 0;
     user_settings['bpm'] = reset ? 0 : parseInt(document.getElementById('input_bpm').innerHTML.split("<br>")[0])
     user_settings['domo_side'] = $("#domovoi").hasClass("domovoi-flip") ? 1 : 0;
+    user_settings['theme'] = $("#theme").val();
     setCookie("settings",JSON.stringify(user_settings),30)
 }
 
 function loadSettings(){
+    loadThemes()
     try{
         user_settings = JSON.parse(getCookie("settings"))
     } catch (error) {
-        user_settings = {"num_evidences":3,"ghost_modifier":2,"volume":50,"mute_timer_toggle":0,"mute_timer_countdown":0,"offset":0,"sound_type":0,"speed_logic_type":0,"bpm_type":0,"bpm":0,"domo_side":0}
+        user_settings = {"num_evidences":3,"ghost_modifier":2,"volume":50,"mute_timer_toggle":0,"mute_timer_countdown":0,"offset":0,"sound_type":0,"speed_logic_type":0,"bpm_type":0,"bpm":0,"domo_side":0,"theme":"Por defecto"}
     }
     document.getElementById("modifier_volume").value = user_settings['volume'] ?? 50
     document.getElementById("mute_timer_toggle").checked = user_settings['mute_timer_toggle'] ?? 0 == 1
     document.getElementById("mute_timer_countdown").checked = user_settings['mute_timer_countdown'] ?? 0 == 1
-    document.getElementById("offset_value").innerText = ` ${user_settings['offset'] ?? 0}% `
+    document.getElementById("offset_value").innerText = ` ${user_settings['offset'] ?? 0.0}% `
     document.getElementById("ghost_modifier_speed").value = user_settings['ghost_modifier'] ?? 2
     document.getElementById("num_evidence").value = user_settings['num_evidences'] ?? 3
     document.getElementById("modifier_sound_type").value = user_settings['sound_type'] ?? 0
@@ -1173,6 +1203,8 @@ function loadSettings(){
         $("#domovoi").addClass("domovoi-flip")
         $("#domovoi-img").addClass("domovoi-img-flip")
     }
+
+    document.getElementById("theme").value = user_settings['theme']
 
     if ((user_settings['bpm'] ?? 0) > 0){
         document.getElementById('input_bpm').innerHTML = `${user_settings['bpm']}<br>bpm`
@@ -1192,6 +1224,7 @@ function loadSettings(){
 
     setCookie("settings",JSON.stringify(user_settings),30)
 
+    changeTheme(user_settings['theme'])
     setVolume()
     adjustOffset(0)
     setTempo()
@@ -1200,16 +1233,17 @@ function loadSettings(){
 }
 
 function resetSettings(){
-    user_settings = {"num_evidences":3,"ghost_modifier":2,"volume":50,"mute_timer_toggle":0,"mute_timer_countdown":0,"offset":0,"sound_type":0,"speed_logic_type":0,"bpm_type":0,"bpm":0}
+    user_settings = {"num_evidences":3,"ghost_modifier":2,"volume":50,"mute_timer_toggle":0,"mute_timer_countdown":0,"offset":0,"sound_type":0,"speed_logic_type":0,"bpm_type":0,"bpm":0,"domo_side":0,"theme":"Por defecto"}
     document.getElementById("modifier_volume").value = user_settings['volume']
     document.getElementById("mute_timer_toggle").checked = user_settings['mute_timer_toggle'] == 1
     document.getElementById("mute_timer_countdown").checked = user_settings['mute_timer_countdown'] == 1
-    document.getElementById("offset_value").innerText = ` ${user_settings['offset']}% `
+    document.getElementById("offset_value").innerText = ` ${user_settings['offset'].toFixed(1)}% `
     document.getElementById("ghost_modifier_speed").value = user_settings['ghost_modifier']
     document.getElementById("num_evidence").value = user_settings['num_evidences']
     document.getElementById("modifier_sound_type").checked = user_settings['sound_type'] == 1
     document.getElementById("speed_logic_type").checked = user_settings['speed_logic_type'] == 1
-    document.getElementById("bpm_type").checked = user_settings['bpm_type'] == 1
+   document.getElementById("bpm_type").checked = user_settings['bpm_type'] == 1
+    document.getElementById("theme").value = user_settings['theme']
     setCookie("settings",JSON.stringify(user_settings),30)
 }
 

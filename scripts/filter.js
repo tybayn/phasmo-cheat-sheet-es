@@ -1,15 +1,15 @@
 function getCookie(e){let t=e+"=",i=decodeURIComponent(document.cookie).split(";");for(let n=0;n<i.length;n++){let o=i[n];for(;" "==o.charAt(0);)o=o.substring(1);if(0==o.indexOf(t))return o.substring(t.length,o.length)}return""}
 function setCookie(e,t,i){let n=new Date;n.setTime(n.getTime()+864e5*i);let o="expires="+n.toUTCString();document.cookie=e+"="+t+";"+o+";path=/"}
 
-const all_speed = ["Lento","Normal","Rapido"]
-const all_sanity = ["Tarde","Average","Temprano","MuyTemprano"]
+const all_speed = ["Slow","Normal","Fast"]
+const all_sanity = ["Late","Average","Early","VeryEarly"]
 let all_evidence = []
 let all_ghosts = []
 let all_maps = {}
 let bpm_list = []
 let bpm_los_list = []
 
-var state = {"evidence":{},"speed":{"Lento":0,"Normal":0,"Rapido":0},"los":-1,"sanity":{"Tarde":0,"Average":0,"Temprano":0,"MuyTemprano":0},"ghosts":{}}
+var state = {"evidence":{},"speed":{"Slow":0,"Normal":0,"Fast":0},"los":-1,"sanity":{"Late":0,"Average":0,"Early":0,"VeryEarly":0},"ghosts":{}}
 var user_settings = {"num_evidences":3,"ghost_modifier":2,"volume":50,"mute_timer_toggle":0,"mute_timer_countdown":0,"offset":0,"sound_type":0,"speed_logic_type":0,"bpm":0,"domo_side":0,"theme":"Por defecto"}
 
 let znid = getCookie("znid")
@@ -301,11 +301,11 @@ function revive(){
 
 function filter(ignore_link=false){
     state["evidence"] = {}
-    state["speed"] = {"Lento":0,"Normal":0,"Rapido":0}
+    state["speed"] = {"Slow":0,"Normal":0,"Fast":0}
     for (var i = 0; i < all_evidence.length; i++){
         state["evidence"][all_evidence[i]] = 0
     }
-    state["sanity"] = {"Tarde":0,"Average":0,"Temprano":0,"MuyTemprano":0}
+    state["sanity"] = {"Late":0,"Average":0,"Early":0,"VeryEarly":0}
     state["los"] = -1
 
     // Get values of checkboxes
@@ -315,7 +315,7 @@ function filter(ignore_link=false){
     var not_evi_array = [];
     var spe_array = [];
     var san_array = [];
-    var san_lookup = {"Tarde":0,"Average":40,"Temprano":50,"MuyTemprano":75}
+    var san_lookup = {"Late":0,"Average":40,"Early":50,"VeryEarly":75}
     var monkey_evi = ""
     if (document.querySelectorAll('[name="evidence"] .monkey-disabled').length > 0)
         monkey_evi = document.querySelectorAll('[name="evidence"] .monkey-disabled')[0].parentElement.value;
@@ -393,10 +393,10 @@ function filter(ignore_link=false){
         var keep = true;
         var loskeep = true;
         var marked_not = $(ghosts[i]).hasClass("faded") || $(ghosts[i]).hasClass("permhidden")
-        var name = ghosts[i].getElementsByClassName("ghost_name")[0].textContent;
+        var name = ghosts[i].id;
         var evi_objects = ghosts[i].getElementsByClassName("ghost_evidence_item")
         var evidence = []
-        for (var j = 0; j < evi_objects.length; j++){evidence.push(evi_objects[j].textContent)}
+        for (var j = 0; j < evi_objects.length; j++){evidence.push(evi_objects[j].id)}
         var nm_evidence = ghosts[i].getElementsByClassName("ghost_nightmare_evidence")[0].textContent;
         var speed = ghosts[i].getElementsByClassName("ghost_speed")[0].textContent;
         var has_los = parseInt(ghosts[i].getElementsByClassName("ghost_has_los")[0].textContent)
@@ -404,11 +404,11 @@ function filter(ignore_link=false){
             parseInt(ghosts[i].getElementsByClassName("ghost_hunt_low")[0].textContent),
             parseInt(ghosts[i].getElementsByClassName("ghost_hunt_high")[0].textContent)
         ]
-        if (name == "Mimico"){
-            evidence.push("Orbes espectrales")
+        if (name == "The Mimic"){
+            evidence.push("Ghost Orbs")
             mimic_evi = evidence
-            nm_evidence = "Orbes espectrales"
-            mimic_nm_evi = "Orbes espectrales"
+            nm_evidence = "Ghost Orbs"
+            mimic_nm_evi = "Ghost Orbs"
         }
 
         //Check for monkey paw filter
@@ -417,7 +417,7 @@ function filter(ignore_link=false){
         }
 
         //Check for los filter
-        if (name != "Mimico" && speed_has_los != -1 && speed_has_los != has_los){
+        if (name != "The Mimic" && speed_has_los != -1 && speed_has_los != has_los){
             loskeep = false
         }
         
@@ -446,7 +446,7 @@ function filter(ignore_link=false){
         else if (num_evidences == "2"){
 
 
-            if (evi_array.length == 3 && name != "Mimico"){
+            if (evi_array.length == 3 && name != "The Mimic"){
                 keep = false
             }
             else if (evi_array.length > 0){
@@ -475,7 +475,7 @@ function filter(ignore_link=false){
         // Insanity
         else if (num_evidences == "1"){
 
-            if (evi_array.length == 2 && name != "Mimico"){
+            if (evi_array.length == 2 && name != "The Mimic"){
                 keep = false
             }
             else if (evi_array.length > 0){
@@ -504,11 +504,11 @@ function filter(ignore_link=false){
         // Apocalypse
         else if (num_evidences == "0"){
 
-            if (evi_array.length > 0 && name != "Mimico"){
+            if (evi_array.length > 0 && name != "The Mimic"){
                 keep = false
             }
 
-            if (not_evi_array.length > 0 && name == "Mimico"){
+            if (not_evi_array.length > 0 && name == "The Mimic"){
                 keep = false
             }
         }
@@ -548,19 +548,19 @@ function filter(ignore_link=false){
         if (spe_array.length > 0){
             var skeep = false,nkeep = false,fkeep = false;
 
-            var shas = (min_speed < base_speed || name == "Mimico")
-            var nhas = (speed_type == "or" && (min_speed === base_speed || max_speed === base_speed || name == "Mimico")) || (speed_type == "range" && min_speed <= base_speed && base_speed <= max_speed)
-            var fhas = (max_speed > base_speed || name == "Mimico")
+            var shas = (min_speed < base_speed || name == "The Mimic")
+            var nhas = (speed_type == "or" && (min_speed === base_speed || max_speed === base_speed || name == "The Mimic")) || (speed_type == "range" && min_speed <= base_speed && base_speed <= max_speed)
+            var fhas = (max_speed > base_speed || name == "The Mimic")
 
             spe_array.forEach(function (item,index){
 
-                if (item == "Lento"){
+                if (item == "Slow"){
                     skeep = true
                 }
                 else if (item == "Normal"){
                     nkeep = true
                 }
-                else if (item == "Rapido"){
+                else if (item == "Fast"){
                     fkeep = true
                 }
             });
@@ -582,14 +582,14 @@ function filter(ignore_link=false){
 
         // Check if speed is being kept
         if (keep && loskeep){
-            if(min_speed < base_speed || name == "Mimico"){
-                keep_speed.add('Lento')
+            if(min_speed < base_speed || name == "The Mimic"){
+                keep_speed.add('Slow')
                 if (marked_not)
-                    fade_speed.add('Lento')
+                    fade_speed.add('Slow')
                 else
-                    not_fade_speed.add('Lento')
+                    not_fade_speed.add('Slow')
             }
-            if ((speed_type == "range" && min_speed <= base_speed && base_speed <= max_speed) || name == "Mimico"){
+            if ((speed_type == "range" && min_speed <= base_speed && base_speed <= max_speed) || name == "The Mimic"){
                 keep_speed.add('Normal')
                 if (marked_not)
                     fade_speed.add('Normal')
@@ -603,20 +603,20 @@ function filter(ignore_link=false){
                 else
                     not_fade_speed.add('Normal')
             }
-            if(max_speed > base_speed || name == "Mimico"){
-                keep_speed.add('Rapido')
+            if(max_speed > base_speed || name == "The Mimic"){
+                keep_speed.add('Fast')
                 if (marked_not)
-                    fade_speed.add('Rapido')
+                    fade_speed.add('Fast')
                 else
-                    not_fade_speed.add('Rapido')
+                    not_fade_speed.add('Fast')
             }
 
-            if(sanity[0] > san_lookup['Tarde'] || sanity[1] > san_lookup['Tarde']){
-                keep_sanity.add('Tarde')
+            if(sanity[0] > san_lookup['Late'] || sanity[1] > san_lookup['Late']){
+                keep_sanity.add('Late')
                 if (marked_not)
-                    fade_sanity.add('Tarde')
+                    fade_sanity.add('Late')
                 else
-                    not_fade_sanity.add('Tarde')
+                    not_fade_sanity.add('Late')
             }
             if(sanity[0] > san_lookup['Average'] || sanity[1] > san_lookup['Average']){
                 keep_sanity.add('Average')
@@ -625,19 +625,19 @@ function filter(ignore_link=false){
                 else
                     not_fade_sanity.add('Average')
             }
-            if(sanity[0] > san_lookup['Temprano'] || sanity[1] > san_lookup['Temprano']){
-                keep_sanity.add('Temprano')
+            if(sanity[0] > san_lookup['Early'] || sanity[1] > san_lookup['Early']){
+                keep_sanity.add('Early')
                 if (marked_not)
-                    fade_sanity.add('Temprano')
+                    fade_sanity.add('Early')
                 else
-                    not_fade_sanity.add('Temprano')
+                    not_fade_sanity.add('Early')
             }
-            if(sanity[0] > san_lookup['MuyTemprano'] || sanity[1] > san_lookup['MuyTemprano']){
-                keep_sanity.add('MuyTemprano')
+            if(sanity[0] > san_lookup['VeryEarly'] || sanity[1] > san_lookup['VeryEarly']){
+                keep_sanity.add('VeryEarly')
                 if (marked_not)
-                    fade_sanity.add('MuyTemprano')
+                    fade_sanity.add('VeryEarly')
                 else
-                    not_fade_sanity.add('MuyTemprano')
+                    not_fade_sanity.add('VeryEarly')
             }
         }
 
@@ -782,7 +782,7 @@ function filter(ignore_link=false){
     }
 
     else if (num_evidences == "0"){
-        all_evidence.filter(evi => evi != 'Orbes espectrales').forEach(function(item){
+        all_evidence.filter(evi => evi != 'Ghost Orbs').forEach(function(item){
             var checkbox = document.getElementById(item);
             $(checkbox).addClass("block")
             $(checkbox).find("#checkbox").removeClass(["good","bad","faded"])

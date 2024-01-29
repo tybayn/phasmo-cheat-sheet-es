@@ -102,32 +102,32 @@ function loadAllAndConnect(){
             loadSettings()
     
             all_ghosts = data.ghosts.map(a => a.ghost)
-            all_evidence = data.evidence
+            all_evidence = Object.keys(data.evidence)
 
             var cards = document.getElementById('cards')
             var cur_version = document.getElementById('current-version-label')
             var evidence_list = document.getElementById('evidence')
     
             evidence_list.innerHTML = "";
-            for(var i = 0; i < data.evidence.length; i++){
+            Object.entries(data.evidence).forEach(([key,value]) => {
                 evidence_list.innerHTML += `
                 <div class="evidence-row">
                     <img class="monkey-smudge" style="display:none;" src="imgs/smudge.png">
-                    <button id="${data.evidence[i]}" class="tricheck white" name="evidence" onclick="tristate(this)" value="${data.evidence[i]}">
+                    <button id="${key}" class="tricheck white" name="evidence" onclick="tristate(this)" value="${key}">
                         <div id="checkbox" class="neutral"><span class="icon"></span></div>
-                        <div class="label">${data.evidence[i]}</div>
+                        <div class="label">${value}</div>
                     </button>
                     <img class="monkey-paw-select" src="imgs/paw-icon.png" onclick="monkeyPawFilter(this)">
                 </div>
                 `
-            }
+            })
     
             cards.innerHTML = "";
             for(var i = 0; i < data.ghosts.length; i++){
                 bpm_speeds.add(data.ghosts[i].min_speed)
                 if(data.ghosts[i].max_speed != null){bpm_speeds.add(data.ghosts[i].max_speed)}
                 if(data.ghosts[i].alt_speed != null){bpm_speeds.add(data.ghosts[i].alt_speed)}
-                var ghost = new Ghost(data.ghosts[i]);
+                var ghost = new Ghost(data.ghosts[i],data.evidence);
                 cards.innerHTML += `${ghost.ghostTemplate}`
             }
             cur_version.innerHTML = `${data.version}`

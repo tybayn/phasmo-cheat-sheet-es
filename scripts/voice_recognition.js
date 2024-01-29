@@ -154,7 +154,7 @@ function parse_speech(vtext){
         var smallest_ghost = "Spirit"
         var smallest_val = 100
         var vvalue = 0
-        if(vtext.startsWith("negativo ").startsWith("negativa ")){
+        if(vtext.startsWith("negativo ") || vtext.startsWith("negativa ")){
             vtext = vtext.replace('negativo ', "").replace('negativa ', "").trim()
             vvalue = 0
             domovoi_msg = "no marcado "
@@ -188,11 +188,11 @@ function parse_speech(vtext){
             }
         }
 
-        for(var i = 0; i < all_ghosts.length; i++){
-            var leven_val = levenshtein_distance(all_ghosts[i].toLowerCase(),vtext)
+        for(var i = 0; i < Object.keys(all_ghosts).length; i++){
+            var leven_val = levenshtein_distance(Object.values(all_ghosts)[i].toLowerCase(),vtext)
             if(leven_val < smallest_val){
                 smallest_val = leven_val 
-                smallest_ghost = all_ghosts[i]
+                smallest_ghost = Object.values(all_ghosts)[i]
             }
         }
         console.log(`${prevtext} >> ${vtext} >> ${smallest_ghost}`)
@@ -200,29 +200,29 @@ function parse_speech(vtext){
         domovoi_msg += smallest_ghost
 
         if (vvalue == 0){
-            fade(document.getElementById(smallest_ghost));
+            fade(document.getElementById(rev(all_ghosts,smallest_ghost)));
         }
         else if (vvalue == 3){
-            guess(document.getElementById(smallest_ghost));
-            if(!$(document.getElementById(smallest_ghost)).isInViewport())
-                document.getElementById(smallest_ghost).scrollIntoView({alignToTop:true,behavior:"smooth"})
+            guess(document.getElementById(rev(all_ghosts,smallest_ghost)));
+            if(!$(document.getElementById(rev(all_ghosts,smallest_ghost))).isInViewport())
+                document.getElementById(rev(all_ghosts,smallest_ghost)).scrollIntoView({alignToTop:true,behavior:"smooth"})
         }
         else if (vvalue == 2){
-            select(document.getElementById(smallest_ghost));
-            if(!$(document.getElementById(smallest_ghost)).isInViewport())
-                document.getElementById(smallest_ghost).scrollIntoView({alignToTop:true,behavior:"smooth"})
+            select(document.getElementById(rev(all_ghosts,smallest_ghost)));
+            if(!$(document.getElementById(rev(all_ghosts,smallest_ghost))).isInViewport())
+                document.getElementById(rev(all_ghosts,smallest_ghost)).scrollIntoView({alignToTop:true,behavior:"smooth"})
         }
         else if (vvalue == -1){
-            remove(document.getElementById(smallest_ghost));
+            remove(document.getElementById(rev(all_ghosts,smallest_ghost)));
         }
         else if (vvalue == -2){
-            died(document.getElementById(smallest_ghost));
-            if(!$(document.getElementById(smallest_ghost)).isInViewport())
-                document.getElementById(smallest_ghost).scrollIntoView({alignToTop:true,behavior:"smooth"})
+            died(document.getElementById(rev(all_ghosts,smallest_ghost)));
+            if(!$(document.getElementById(rev(all_ghosts,smallest_ghost))).isInViewport())
+                document.getElementById(rev(all_ghosts,smallest_ghost)).scrollIntoView({alignToTop:true,behavior:"smooth"})
         }
         else if(vvalue == -10){
-            if(!$(document.getElementById(smallest_ghost)).isInViewport())
-                document.getElementById(smallest_ghost).scrollIntoView({alignToTop:true,behavior:"smooth"})
+            if(!$(document.getElementById(rev(all_ghosts,smallest_ghost))).isInViewport())
+                document.getElementById(rev(all_ghosts,smallest_ghost)).scrollIntoView({alignToTop:true,behavior:"smooth"})
         }
 
         resetResetButton()
@@ -242,7 +242,7 @@ function parse_speech(vtext){
         var smallest_evidence = "emf 5"
         var smallest_val = 100
         var vvalue = 1
-        if(vtext.startsWith("negativo ").startsWith("negativa ")){
+        if(vtext.startsWith("negativo ") || vtext.startsWith("negativa ")){
             vtext = vtext.replace('negativo ', "").replace('negativa ', "").trim()
             vvalue = -1
             domovoi_msg = "evidencia no marcada como "
@@ -263,20 +263,20 @@ function parse_speech(vtext){
         }
 
 
-        for(var i = 0; i < all_evidence.length; i++){
-            var leven_val = levenshtein_distance(all_evidence[i].toLowerCase(),vtext)
+        for(var i = 0; i < Object.keys(all_evidence).length; i++){
+            var leven_val = levenshtein_distance(Object.values(all_evidence)[i].toLowerCase(),vtext)
             if(leven_val < smallest_val){
                 smallest_val = leven_val 
-                smallest_evidence = all_evidence[i]
+                smallest_evidence = Object.values(all_evidence)[i]
             }
         }
         console.log(`${prevtext} >> ${vtext} >> ${smallest_evidence}`)
         running_log[cur_idx]["Debug"] = `${prevtext} >> ${vtext} >> ${smallest_evidence}`
         domovoi_msg += smallest_evidence
 
-        if(!$(document.getElementById(smallest_evidence).querySelector("#checkbox")).hasClass("block")){
-            while (vvalue != {"good":1,"bad":-1,"neutral":0}[document.getElementById(smallest_evidence).querySelector("#checkbox").classList[0]]){
-                tristate(document.getElementById(smallest_evidence));
+        if(!$(document.getElementById(rev(all_evidence,smallest_evidence)).querySelector("#checkbox")).hasClass("block")){
+            while (vvalue != {"good":1,"bad":-1,"neutral":0}[document.getElementById(rev(all_evidence,smallest_evidence)).querySelector("#checkbox").classList[0]]){
+                tristate(document.getElementById(rev(all_evidence,smallest_evidence)));
             }
         }
         else{
@@ -312,18 +312,18 @@ function parse_speech(vtext){
         }
 
 
-        for(var i = 0; i < all_evidence.length; i++){
-            var leven_val = levenshtein_distance(all_evidence[i].toLowerCase(),vtext)
+        for(var i = 0; i < Object.keys(all_evidence).length; i++){
+            var leven_val = levenshtein_distance(Object.values(all_evidence)[i].toLowerCase(),vtext)
             if(leven_val < smallest_val){
                 smallest_val = leven_val 
-                smallest_evidence = all_evidence[i]
+                smallest_evidence = Object.values(all_evidence)[i]
             }
         }
         console.log(`${prevtext} >> ${vtext} >> ${smallest_evidence}`)
         running_log[cur_idx]["Debug"] = `${prevtext} >> ${vtext} >> ${smallest_evidence}`
         domovoi_msg += `${smallest_evidence} como evidencia de mano de mono`
 
-        monkeyPawFilter($(document.getElementById(smallest_evidence)).parent().find(".monkey-paw-select"))
+        monkeyPawFilter($(document.getElementById(rev(all_evidence,smallest_evidence))).parent().find(".monkey-paw-select"))
 
         resetResetButton()
         domovoi_heard(domovoi_msg)
@@ -343,7 +343,7 @@ function parse_speech(vtext){
         var smallest_speed = "normal"
         var smallest_val = 100
         var vvalue = 1
-        if(vtext.startsWith("negativo ").startsWith("negativa ")){
+        if(vtext.startsWith("negativo ")|| vtext.startsWith("negativa ")){
             vtext = vtext.replace('negativo ', "").replace('negativa ', "").trim()
             vvalue = 0
             domovoi_msg = "velocidad marcada no "
@@ -383,20 +383,20 @@ function parse_speech(vtext){
                 }
             }
 
-            for(var i = 0; i < all_speed.length; i++){
-                var leven_val = levenshtein_distance(all_speed[i].toLowerCase(),vtext)
+            for(var i = 0; i < Object.keys(all_speed).length; i++){
+                var leven_val = levenshtein_distance(Object.values(all_speed)[i].toLowerCase(),vtext)
                 if(leven_val < smallest_val){
                     smallest_val = leven_val 
-                    smallest_speed = all_speed[i]
+                    smallest_speed = Object.values(all_speed)[i]
                 }
             }
             console.log(`${prevtext} >> ${vtext} >> ${smallest_speed}`)
             running_log[cur_idx]["Debug"] = `${prevtext} >> ${vtext} >> ${smallest_speed}`
             domovoi_msg += smallest_speed
 
-            if(!$(document.getElementById(smallest_speed).querySelector("#checkbox")).hasClass("block")){
-                while (vvalue != {"good":1,"neutral":0}[document.getElementById(smallest_speed).querySelector("#checkbox").classList[0]]){
-                    dualstate(document.getElementById(smallest_speed));
+            if(!$(document.getElementById(rev(all_speed,smallest_speed)).querySelector("#checkbox")).hasClass("block")){
+                while (vvalue != {"good":1,"neutral":0}[document.getElementById(rev(all_speed,smallest_speed)).querySelector("#checkbox").classList[0]]){
+                    dualstate(document.getElementById(rev(all_speed,smallest_speed)));
                 }
             }
             else{
@@ -422,7 +422,7 @@ function parse_speech(vtext){
         var smallest_sanity = "Late"
         var smallest_val = 100
         var vvalue = 1
-        if(vtext.startsWith("negativo ").startsWith("negativa ")){
+        if(vtext.startsWith("negativo ") || vtext.startsWith("negativa ")){
             vtext = vtext.replace('negativo ', "").replace('negativa ', "").trim()
             vvalue = 0
             domovoi_msg = "marcar caza cordura no "
@@ -441,20 +441,20 @@ function parse_speech(vtext){
             }
         }
 
-        for(var i = 0; i < all_sanity.length; i++){
-            var leven_val = levenshtein_distance(all_sanity[i].toLowerCase(),vtext)
+        for(var i = 0; i < Object.keys(all_sanity).length; i++){
+            var leven_val = levenshtein_distance(Object.values(all_sanity)[i].toLowerCase(),vtext)
             if(leven_val < smallest_val){
                 smallest_val = leven_val 
-                smallest_sanity = all_sanity[i]
+                smallest_sanity = Object.values(all_sanity)[i]
             }
         }
         console.log(`${prevtext} >> ${vtext} >> ${smallest_sanity}`)
         running_log[cur_idx]["Debug"] = `${prevtext} >> ${vtext} >> ${smallest_sanity}`
         domovoi_msg += smallest_sanity.replace("Average","Normal")
 
-        if(!$(document.getElementById(smallest_sanity).querySelector("#checkbox")).hasClass("block")){
-            while (vvalue != {"good":1,"neutral":0}[document.getElementById(smallest_sanity).querySelector("#checkbox").classList[0]]){
-                dualstate(document.getElementById(smallest_sanity),false,true);
+        if(!$(document.getElementById(rev(all_sanity,smallest_sanity)).querySelector("#checkbox")).hasClass("block")){
+            while (vvalue != {"good":1,"neutral":0}[document.getElementById(rev(all_sanity,smallest_sanity)).querySelector("#checkbox").classList[0]]){
+                dualstate(document.getElementById(rev(all_sanity,smallest_sanity)),false,true);
             }
         }
         else{

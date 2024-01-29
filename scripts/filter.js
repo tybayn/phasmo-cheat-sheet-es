@@ -1,10 +1,11 @@
 function getCookie(e){let t=e+"=",i=decodeURIComponent(document.cookie).split(";");for(let n=0;n<i.length;n++){let o=i[n];for(;" "==o.charAt(0);)o=o.substring(1);if(0==o.indexOf(t))return o.substring(t.length,o.length)}return""}
 function setCookie(e,t,i){let n=new Date;n.setTime(n.getTime()+864e5*i);let o="expires="+n.toUTCString();document.cookie=e+"="+t+";"+o+";path=/"}
+function rev(obj,value){for(var prop in obj){if(obj.hasOwnProperty(prop)){if(obj[prop]===value)return prop;}}}
 
-const all_speed = ["Slow","Normal","Fast"]
-const all_sanity = ["Late","Average","Early","VeryEarly"]
-let all_evidence = []
-let all_ghosts = []
+const all_speed = {"Slow":"Lento","Normal":"Normal","Fast":"Rapido"}
+const all_sanity = {"Late":"Tarde","Average":"Average","Early":"Temprano","VeryEarly":"MuyTemprano"}
+let all_evidence = {}
+let all_ghosts = {}
 let all_maps = {}
 let bpm_list = []
 let bpm_los_list = []
@@ -302,8 +303,8 @@ function revive(){
 function filter(ignore_link=false){
     state["evidence"] = {}
     state["speed"] = {"Slow":0,"Normal":0,"Fast":0}
-    for (var i = 0; i < all_evidence.length; i++){
-        state["evidence"][all_evidence[i]] = 0
+    for (var i = 0; i < Object.keys(all_evidence).length; i++){
+        state["evidence"][Object.keys(all_evidence)[i]] = 0
     }
     state["sanity"] = {"Late":0,"Average":0,"Early":0,"VeryEarly":0}
     state["los"] = -1
@@ -354,22 +355,22 @@ function filter(ignore_link=false){
 
 
     // Filter other evidences
-    for (var i = 0; i < all_evidence.length; i++){
-        var checkbox = document.getElementById(all_evidence[i]);
+    for (var i = 0; i < Object.keys(all_evidence).length; i++){
+        var checkbox = document.getElementById(Object.keys(all_evidence)[i]);
         $(checkbox).removeClass("block")
         $(checkbox).find("#checkbox").removeClass(["block","disabled","faded"])
         $(checkbox).find(".label").removeClass("disabled-text")
     }
     // Filter other speeds
-    for (var i = 0; i < all_speed.length; i++){
-        var checkbox = document.getElementById(all_speed[i]);
+    for (var i = 0; i < Object.keys(all_speed).length; i++){
+        var checkbox = document.getElementById(Object.keys(all_speed)[i]);
         $(checkbox).removeClass("block")
         $(checkbox).find("#checkbox").removeClass(["block","disabled","faded"])
         $(checkbox).find(".label").removeClass("disabled-text")
     }
     // Filter other sanities
-    for (var i = 0; i < all_sanity.length; i++){
-        var checkbox = document.getElementById(all_sanity[i]);
+    for (var i = 0; i < Object.keys(all_sanity).length; i++){
+        var checkbox = document.getElementById(Object.keys(all_sanity)[i]);
         $(checkbox).removeClass("block")
         $(checkbox).find("#checkbox").removeClass(["block","disabled","faded"])
         $(checkbox).find(".label").removeClass("disabled-text")
@@ -666,7 +667,7 @@ function filter(ignore_link=false){
 
     if (num_evidences == "3"){
         if (evi_array.length >= 0){
-            all_evidence.filter(evi => !keep_evidence.has(evi)).forEach(function(item){
+            Object.keys(all_evidence).filter(evi => !keep_evidence.has(evi)).forEach(function(item){
                 if (!not_evi_array.includes(item)){
                     var checkbox = document.getElementById(item);
                     $(checkbox).addClass("block")
@@ -682,7 +683,7 @@ function filter(ignore_link=false){
     else if (num_evidences == "2"){
         var keep_evi = evi_array
         if (keep_evi.length == 3){
-            all_evidence.filter(evi => !keep_evi.includes(evi)).forEach(function(item){
+            Object.keys(all_evidence).filter(evi => !keep_evi.includes(evi)).forEach(function(item){
                 if (!not_evi_array.includes(item)){
                     var checkbox = document.getElementById(item);
                     $(checkbox).addClass("block")
@@ -705,7 +706,7 @@ function filter(ignore_link=false){
                 } 
             }
 
-            all_evidence.filter(evi => !keep_evi.includes(evi)).forEach(function(item){
+            Object.keys(all_evidence).filter(evi => !keep_evi.includes(evi)).forEach(function(item){
                 if (!not_evi_array.includes(item)){
                     var checkbox = document.getElementById(item);
                     $(checkbox).addClass("block")
@@ -717,7 +718,7 @@ function filter(ignore_link=false){
             })
         }
         else if (keep_evi.length > 0){
-            all_evidence.filter(evi => !keep_evidence.has(evi)).forEach(function(item){
+            Object.keys(all_evidence).filter(evi => !keep_evidence.has(evi)).forEach(function(item){
                 if (!not_evi_array.includes(item)){
                     var checkbox = document.getElementById(item);
                     $(checkbox).addClass("block")
@@ -733,7 +734,7 @@ function filter(ignore_link=false){
     else if (num_evidences == "1"){
         var keep_evi = evi_array
         if (keep_evi.length == 2){
-            all_evidence.filter(evi => !keep_evi.includes(evi)).forEach(function(item){
+            Object.keys(all_evidence).filter(evi => !keep_evi.includes(evi)).forEach(function(item){
                 if (!not_evi_array.includes(item)){
                     var checkbox = document.getElementById(item);
                     $(checkbox).addClass("block")
@@ -756,7 +757,7 @@ function filter(ignore_link=false){
                 } 
             }
 
-            all_evidence.filter(evi => !keep_evi.includes(evi)).forEach(function(item){
+            Object.keys(all_evidence).filter(evi => !keep_evi.includes(evi)).forEach(function(item){
                 if (!not_evi_array.includes(item)){
                     var checkbox = document.getElementById(item);
                     $(checkbox).addClass("block")
@@ -768,7 +769,7 @@ function filter(ignore_link=false){
             })
         }
         else if (keep_evi.length > 0){
-            all_evidence.filter(evi => !keep_evidence.has(evi)).forEach(function(item){
+            Object.keys(all_evidence).filter(evi => !keep_evidence.has(evi)).forEach(function(item){
                 if (!not_evi_array.includes(item)){
                     var checkbox = document.getElementById(item);
                     $(checkbox).addClass("block")
@@ -782,7 +783,7 @@ function filter(ignore_link=false){
     }
 
     else if (num_evidences == "0"){
-        all_evidence.filter(evi => evi != 'Ghost Orbs').forEach(function(item){
+        Object.keys(all_evidence).filter(evi => evi != 'Ghost Orbs').forEach(function(item){
             var checkbox = document.getElementById(item);
             $(checkbox).addClass("block")
             $(checkbox).find("#checkbox").removeClass(["good","bad","faded"])
@@ -863,7 +864,7 @@ function filter(ignore_link=false){
     }
 
     if (evi_array.length > 0 || not_evi_array.length > 0){
-        all_speed.filter(spe => !keep_speed.has(spe)).forEach(function(item){
+        Object.keys(all_speed).filter(spe => !keep_speed.has(spe)).forEach(function(item){
             var checkbox = document.getElementById(item);
             $(checkbox).addClass("block")
             $(checkbox).find("#checkbox").removeClass(["good"])
@@ -871,7 +872,7 @@ function filter(ignore_link=false){
             $(checkbox).find(".label").addClass("disabled-text")
         })
 
-        all_sanity.filter(san => !keep_sanity.has(san)).forEach(function(item){
+        Object.keys(all_sanity).filter(san => !keep_sanity.has(san)).forEach(function(item){
             var checkbox = document.getElementById(item);
             $(checkbox).addClass("block")
             $(checkbox).find("#checkbox").removeClass(["good"])

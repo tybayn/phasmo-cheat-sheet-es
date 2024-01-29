@@ -1,5 +1,6 @@
 function getCookie(e){let t=e+"=",i=decodeURIComponent(document.cookie).split(";");for(let n=0;n<i.length;n++){let o=i[n];for(;" "==o.charAt(0);)o=o.substring(1);if(0==o.indexOf(t))return o.substring(t.length,o.length)}return""}
 function setCookie(e,t,i){let n=new Date;n.setTime(n.getTime()+864e5*i);let o="expires="+n.toUTCString();document.cookie=e+"="+t+";"+o+";path=/"}
+function rev(obj,value){for(var prop in obj){if(obj.hasOwnProperty(prop)){if(obj[prop]===value)return prop;}}}
 
 function checkLink(){
     return new Promise((resolve, reject) => {
@@ -101,8 +102,8 @@ function loadAllAndConnect(){
         .then(data => {
             loadSettings()
     
-            all_ghosts = data.ghosts.map(a => a.ghost)
-            all_evidence = Object.keys(data.evidence)
+            all_ghosts = data.ghosts.reduce((r, g) => {r[g.ghost] = g.name; return r;},{});
+            all_evidence = data.evidence
 
             var cards = document.getElementById('cards')
             var cur_version = document.getElementById('current-version-label')
@@ -134,11 +135,11 @@ function loadAllAndConnect(){
     
             var start_state = getCookie("state")
     
-            for (var i = 0; i < all_evidence.length; i++){
-                state["evidence"][all_evidence[i]] = 0
+            for (var i = 0; i < Object.keys(all_evidence).length; i++){
+                state["evidence"][Object.keys(all_evidence)[i]] = 0
             }
-            for (var i = 0; i < all_ghosts.length; i++){
-                state["ghosts"][all_ghosts[i]] = 1
+            for (var i = 0; i < Object.keys(all_ghosts).length; i++){
+                state["ghosts"][Object.keys(all_ghosts)[i]] = 1
             }
             
             if (!start_state){

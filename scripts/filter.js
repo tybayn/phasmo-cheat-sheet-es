@@ -251,7 +251,7 @@ function died(elem,ignore_link=false,internal=false){
         $(elem).removeClass(["selected","guessed","permhidden"])
         $(elem).addClass("died");
         if (!ignore_link || internal) markedDead = true
-        state["ghosts"][$(elem).find(".ghost_name")[0].] = -2;
+        state["ghosts"][elem.id] = -2;
     }
     setCookie("state",JSON.stringify(state),1)
     if(!ignore_link && !switch_type){filter(ignore_link)}

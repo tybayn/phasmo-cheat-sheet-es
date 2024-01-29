@@ -181,13 +181,13 @@ function select(elem,ignore_link=false,internal=false){
     if (on){
         $(elem).removeClass(["selected"]);
         if (!ignore_link || internal) markedDead = false
-        state["ghosts"][$(elem).find(".ghost_name")[0].innerText] = 1;
+        state["ghosts"][$(elem).find(".ghost_name")[0].id] = 1;
     }
     else{
         $(elem).removeClass(["died","guessed","permhidden"])
         $(elem).addClass("selected");
         if (!ignore_link || internal) markedDead = false
-        state["ghosts"][$(elem).find(".ghost_name")[0].innerText] = 2;
+        state["ghosts"][$(elem).find(".ghost_name")[0].id] = 2;
     }
     setCookie("state",JSON.stringify(state),1)
     if(!ignore_link && !switch_type){filter(ignore_link)}
@@ -215,12 +215,12 @@ function guess(elem,ignore_link=false,internal=false){
 
     if (on){
         $(elem).removeClass("guessed");
-        state["ghosts"][$(elem).find(".ghost_name")[0].innerText] = 1;
+        state["ghosts"][$(elem).find(".ghost_name")[0].id] = 1;
     }
     else{
         $(elem).removeClass(["selected","died","permhidden"])
         $(elem).addClass("guessed");
-        state["ghosts"][$(elem).find(".ghost_name")[0].innerText] = 3;
+        state["ghosts"][$(elem).find(".ghost_name")[0].id] = 3;
     }
     setCookie("state",JSON.stringify(state),1)
     if(!ignore_link){filter(ignore_link)}
@@ -245,13 +245,13 @@ function died(elem,ignore_link=false,internal=false){
     if (on){
         $(elem).removeClass(["selected","died"]);
         if (!ignore_link || internal) markedDead = false
-        state["ghosts"][$(elem).find(".ghost_name")[0].innerText] = 1;
+        state["ghosts"][$(elem).find(".ghost_name")[0].id] = 1;
     }
     else{
         $(elem).removeClass(["selected","guessed","permhidden"])
         $(elem).addClass("died");
         if (!ignore_link || internal) markedDead = true
-        state["ghosts"][$(elem).find(".ghost_name")[0].innerText] = -2;
+        state["ghosts"][$(elem).find(".ghost_name")[0].id] = -2;
     }
     setCookie("state",JSON.stringify(state),1)
     if(!ignore_link && !switch_type){filter(ignore_link)}
@@ -263,13 +263,13 @@ function fade(elem,ignore_link=false){
 
     $(elem).removeClass(["selected","guessed","died"])
 
-    if (state["ghosts"][$(elem).find(".ghost_name")[0].innerText] != 0){
-        state["ghosts"][$(elem).find(".ghost_name")[0].innerText] = 0;
+    if (state["ghosts"][$(elem).find(".ghost_name")[0].id] != 0){
+        state["ghosts"][$(elem).find(".ghost_name")[0].id] = 0;
         $(elem).addClass("faded");
         $(elem).find(".ghost_name").addClass("strike");
     }
     else{
-        state["ghosts"][$(elem).find(".ghost_name")[0].innerText] = 1;
+        state["ghosts"][$(elem).find(".ghost_name")[0].id] = 1;
         $(elem).removeClass("faded");
         $(elem).find(".ghost_name").removeClass("strike");
     }
@@ -279,7 +279,7 @@ function fade(elem,ignore_link=false){
 }
 
 function remove(elem,ignore_link=false){
-    state["ghosts"][$(elem).find(".ghost_name")[0].innerText] = -1;
+    state["ghosts"][$(elem).find(".ghost_name")[0].id] = -1;
     $(elem).find(".ghost_name").removeClass("strike");
     $(elem).removeClass(["selected","guessed","died","faded"]);
     $(elem).addClass("permhidden");

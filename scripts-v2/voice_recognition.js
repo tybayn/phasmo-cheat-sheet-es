@@ -646,7 +646,7 @@ function parse_speech(vtext){
         }
         domovoi_msg += smallest_num
 
-        smallest_num = {"-1":"personalizada","0":"apocalipsis","1":"demencia","2":"pesadilla","3":"profesional","3I":"intermedia","3A":"principiante"}[smallest_num]
+        smallest_num = {"personalizada":"-1","apocalipsis":"0","demencia":"1","pesadilla":"2","profesional":"3","intermedia":"3I","principiante":"3A"}[smallest_num]
         document.getElementById("num_evidence").value = smallest_num ?? 3
         if(prev_value != smallest_num){
             filter()

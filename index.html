@@ -13,13 +13,13 @@
         };
     </script>
     <script src="jquery/jquery-3.6.2.min.js"></script>
-    <script src="scripts/ghost_template.js"></script>
-    <link rel="stylesheet" href="styles/style.css"/>
-    <link rel="stylesheet" href="styles/style-mobile.css"/>
+    <script src="scripts-v2/ghost_template.js"></script>
+    <link rel="stylesheet" href="styles-v2/style.css"/>
+    <link rel="stylesheet" href="styles-v2/style-mobile.css"/>
     <link rel="stylesheet" href="themes/themes.css"/>
-    <link rel="stylesheet" href="wiki/wiki.css" >
+    <link rel="stylesheet" href="wiki-v2/wiki.css" >
     <link rel="stylesheet" href="events/events.css" >
-    <link rel="stylesheet" href="styles/sparkles.css" >
+    <link rel="stylesheet" href="styles-v2/sparkles.css" >
 </head>
 
 <body>
@@ -528,21 +528,21 @@
         }
     </script>
     <script src="themes/themes.js"></script>
-    <script src="scripts/audio_controller.js"></script>
-    <script src="scripts/metronome.js"></script>
-    <script src="scripts/timer.js"></script>
-    <script src="wiki/wiki.js"></script>
-    <script src="scripts/filter.js"></script>
-    <script src="scripts/wslink.js"></script>
-    <script src="scripts/zn.js"></script>
+    <script src="scripts-v2/audio_controller.js"></script>
+    <script src="scripts-v2/metronome.js"></script>
+    <script src="scripts-v2/timer.js"></script>
+    <script src="wiki-v2/wiki.js"></script>
+    <script src="scripts-v2/filter.js"></script>
+    <script src="scripts-v2/wslink.js"></script>
+    <script src="scripts-v2/zn.js"></script>
     <script src="events/events.js"></script>
-    <script src="scripts/voice_es.js"></script>
-    <script src="scripts/voice_recognition.js"></script>
-    <script src="scripts/sparkles.js"></script>
+    <script src="scripts-v2/voice_es.js"></script>
+    <script src="scripts-v2/voice_recognition.js"></script>
+    <script src="scripts-v2/sparkles.js"></script>
     <script>
         $(window).on('load', function() {
             let load_wiki = new Promise((resolve, reject) => {
-                $("#wiki-body").load("wiki/wiki.html")
+                $("#wiki-body").load("wiki-v2/wiki.html")
                 resolve("Ghost data loaded")
             })
             Promise.all([load_wiki,checkLink()])

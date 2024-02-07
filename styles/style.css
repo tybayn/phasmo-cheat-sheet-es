@@ -848,7 +848,7 @@ hr{
         background: rgba(0,0,0,0.25);
         align-items: center;
         border-radius: 5px;
-        padding: 2px 4px 10px 4px;
+        padding: 6px 4px 10px 4px;
     }
 
     .timer_block{
@@ -877,9 +877,13 @@ hr{
     }
 
     .modifier_smudge_timer{
-        font-size: 18px;
+        font-size: 16px;
         letter-spacing: 1px;
-        padding: 10px;
+        text-align: center;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0px 4px 4px 4px;
     }
 
     #ghost_modifier_speed, #modifier_volume{
@@ -941,7 +945,7 @@ hr{
         grid-row: 2;
         display: grid;
         width:100%;
-        grid-template-rows: 32px min-content 40px min-content 40px auto;
+        grid-template-rows: 25px min-content 37px min-content 37px auto;
         overflow-x: hidden;
     }
 
@@ -952,8 +956,10 @@ hr{
         z-index: 2;
     }
 
-    .num_evidence{
-        border: none;
+    .num_evidence,.cust_num_evidence{
+        grid-column: 1;
+        grid-row: 2;
+        border-radius: 5px;
         color: #FFF;
         background: rgba(0,0,0,0.25);
         box-shadow: inset 0 0 10px #161615;
@@ -961,14 +967,27 @@ hr{
         font-size: 16px;
         padding: 0px 3px;
         padding-top: 1px;
-        font-family: 'Unutterable';
+        font-family: 'Yahfie';
         float: right;
         cursor: pointer;
     }
 
-    .num_evidence option{
+    .num_evidence:focus-visible,.cust_num_evidence:focus-visible{
+        outline: none;
+        border: none;
+    }
+
+    .num_evidence option, .cust_num_evidence option{
         background-color: #161615;
         cursor: pointer;
+    }
+
+    #custom_options{
+        grid-column: 1;
+        grid-row: 2;
+        display: flex;
+        flex: 1;
+        margin-top: 28px;
     }
 
     #game_mode{
@@ -1005,6 +1024,7 @@ hr{
         height: min-content;
         border-radius: 5px;
         padding: 2px 0;
+        margin-top: 28px;
     }
 
     .speed_title{
@@ -1249,8 +1269,6 @@ hr{
         width: 0;
         background-color: #ffffff60;
         box-sizing: border-box;
-        position: absolute;
-        float: left;
     }
 
     #progressBar .demon_line {
@@ -1335,15 +1353,13 @@ hr{
         position: relative;
     }
       
-    #cooldownProgressBar .bar {
+   #cooldownProgressBar .bar {
         height: 6px;
         text-align: right;
         line-height: 6px;
         width: 0;
         background-color: #ffffff60;
         box-sizing: border-box;
-        position: absolute;
-        float: left;
     }
 
     #cooldownProgressBar .demon_line {
@@ -1373,6 +1389,80 @@ hr{
         left: 29%;
         bottom: -6px;
         position: absolute;
+    }
+
+    #time_left_hunt{
+        color: #fff;
+        width: calc(100% - 20px);
+        font-size: 12px;
+        text-align: end;
+        position: relative;
+        padding: 0px 10px;
+        margin-top: -5px;
+    }
+
+    #huntProgress {
+        margin: 0px 10px;
+        width: calc(100% - 20px);
+        position: relative;
+    }
+
+    #huntProgressBar {
+        width: calc(100% - 32px);
+        margin: 11px 0px 11px 4px;
+        height: 6px;
+        box-shadow: inset 0 0 10px #161615;
+        background: rgba(0,0,0,0.25);
+        display: inline-block;
+        position: relative;
+    }
+
+    #huntProgressBar .bar {
+        height: 6px;
+        text-align: right;
+        line-height: 6px;
+        width: 0;
+        background-color: #ffffff60;
+        box-sizing: border-box;
+    }
+
+    #huntProgressBar .cursed_line {
+        height: 8px;
+        border-left: 1px #fff dotted;
+        left: 0;
+        width: 0;
+        top: -2px;
+        position: absolute;
+        float: left;
+    }
+
+    #huntProgressBar .normal_line {
+        height: 10px;
+        border-left: 1px #fff solid;
+        left: 40%;
+        width: 0;
+        top: -2px;
+        position: absolute;
+        float: left;
+    }
+
+    .hunt_cursed_line_label{
+        color: rgb(145, 145, 145);
+        font-size: 10px;
+        display: inline-block;
+        left: 12px;
+        bottom: -6px;
+        position: absolute;
+    }
+
+    .hunt_size_label{
+        color: rgb(145, 145, 145);
+        font-size: 10px;
+        display: inline-block;
+        right: -12px;
+        bottom: -6px;
+        position: absolute;
+        text-align: right;
     }
 
     #tap{
@@ -1453,11 +1543,17 @@ hr{
         text-align: center;
     }
 
-    .modifier_volume_labels{
+    .modifier_volume_labels {
         display: flex;
         justify-content: space-between;
         width: 92%;
         padding-top: 2px;
+    }
+
+    .modifier_volume_label{
+        color: #fff;
+        font-size: 9px;
+        rotate: 320deg;
     }
 
     .modifier_volume_label{
@@ -1534,6 +1630,7 @@ hr{
         overflow: hidden;
         position: relative;
         cursor: zoom-in;
+        touch-action:none;
     }
 
     .map_image{
@@ -1658,6 +1755,10 @@ hr{
         text-align: center;
         align-self: center;
         margin-bottom: 15px;
+    }
+
+   #close-menu-button{
+        display: none;
     }
 
     #reset{
@@ -2116,7 +2217,14 @@ input{
     .domovoi-flip{
         align-items: flex-start !important;
         left: 205px !important;
-        animation: domovoi-float-flip 2s cubic-bezier(0.1, -0.6, 0.2, 0) infinite !important;
+    }
+
+    .domovoi-menu-hidden{
+        animation: domovoi-float-menu-hidden 2s cubic-bezier(0.1, -0.6, 0.2, 0) infinite !important;
+    }
+
+    .domovoi-custom{
+        animation: domovoi-float-menu-custom 2s cubic-bezier(0.1, -0.6, 0.2, 0) infinite !important;
     }
 
 

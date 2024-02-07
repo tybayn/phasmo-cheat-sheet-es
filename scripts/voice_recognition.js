@@ -467,7 +467,7 @@ function parse_speech(vtext){
         reset_voice_status()
 
     }
-    else if(vtext.startsWith('temporizador')){
+    else if(vtext.endsWith('temporizador')){
         document.getElementById("voice_recognition_status").className = null
         document.getElementById("voice_recognition_status").style.backgroundImage = "url(imgs/mic-recognized.png)"
         console.log("Recognized temporizador command")
@@ -492,21 +492,21 @@ function parse_speech(vtext){
         running_log[cur_idx]["Domo"] = domovoi_msg
         reset_voice_status()
     }
-    else if(vtext.startsWith('tiempo de enfriamiento')){
+    else if(vtext.endsWith('espere')){
         document.getElementById("voice_recognition_status").className = null
         document.getElementById("voice_recognition_status").style.backgroundImage = "url(imgs/mic-recognized.png)"
-        console.log("Recognized tiempo de enfriamiento command")
-        running_log[cur_idx]["Type"] = "tiempo de enfriamiento"
+        console.log("Recognized espere command")
+        running_log[cur_idx]["Type"] = "espere"
         console.log(`Heard '${vtext}'`)
-        vtext = vtext.replace('tiempo de enfriamiento', "").trim()
+        vtext = vtext.replace('espere', "").trim()
         
         if(vtext == "inicio"){
-            domovoi_msg += "inicio del temporizador del tiempo de enfriamiento "
+            domovoi_msg += "inicio del temporizador del tiempo de espere "
             toggle_cooldown_timer(true,false)
             send_cooldown_timer(true,false)
         } 
         else{
-            domovoi_msg += "temporizador del tiempo de enfriamiento detenida"
+            domovoi_msg += "temporizador del tiempo de espere detenida"
             toggle_cooldown_timer(false,true)
             send_cooldown_timer(false,true)
         }
@@ -515,13 +515,77 @@ function parse_speech(vtext){
         running_log[cur_idx]["Domo"] = domovoi_msg
         reset_voice_status()
     }
-    else if(vtext.startsWith('numero de evidencias') || vtext.startsWith('dificultad')){
+    else if(vtext.endsWith('cazar')){
+        document.getElementById("voice_recognition_status").className = null
+        document.getElementById("voice_recognition_status").style.backgroundImage = "url(imgs/mic-recognized.png)"
+        console.log("Recognized cazar command")
+        running_log[cur_idx]["Type"] = "cazar"
+        console.log(`Heard '${vtext}'`)
+        vtext = vtext.replace('cazar', "").trim()
+        
+        if(vtext == "inicio"){
+            domovoi_msg += "inicio del temporizador del tiempo de cazar "
+            toggle_cooldown_timer(true,false)
+            send_cooldown_timer(true,false)
+        } 
+        else{
+            domovoi_msg += "temporizador del tiempo de cazar detenida"
+            toggle_cooldown_timer(false,true)
+            send_cooldown_timer(false,true)
+        }
+
+        domovoi_heard(domovoi_msg)
+        running_log[cur_idx]["Domo"] = domovoi_msg
+        reset_voice_status()
+    }
+    else if(vtext.startsWith('duración de la caza')){
+        document.getElementById("voice_recognition_status").className = null
+        document.getElementById("voice_recognition_status").style.backgroundImage = "url(imgs/mic-recognized.png)"
+        console.log("Recognized hunt duration set command")
+        running_log[cur_idx]["Type"] = "hunt duration set"
+        console.log(`Heard '${vtext}'`)
+        vtext = vtext.replace('duración de la caza ', "").trim()
+        domovoi_msg += "ajustar la duración de la caza a "
+
+        if(document.getElementById("num_evidence").value == "-1"){
+
+            var smallest_num = "3"
+            var smallest_val = 100
+            var prev_value = document.getElementById("cust_hunt_length").value
+            var all_hunt_length = ["corto","bajo","medio","largo","alto"]
+
+            for(var i = 0; i < all_hunt_length.length; i++){
+                var leven_val = levenshtein_distance(all_hunt_length[i],vtext)
+                if(leven_val < smallest_val){
+                    smallest_val = leven_val 
+                    smallest_num = all_hunt_length[i]
+                }
+            }
+            domovoi_msg += smallest_num
+
+            smallest_num = {"corto":"3A","bajo":"3A","medio":"3I","largo":"3","alto":"3"}[smallest_num]
+            document.getElementById("cust_hunt_length").value = smallest_num
+            if(prev_value != smallest_num){
+                filter()
+                updateMapDifficulty(smallest_num)
+                saveSettings()
+            }
+        }
+        else{
+            domovoi_msg = "dificultad personalizada no seleccionada"
+        }
+
+        domovoi_heard(domovoi_msg)
+        running_log[cur_idx]["Domo"] = domovoi_msg
+        reset_voice_status()
+    }
+    else if(vtext.startsWith('numero de evidencias')){
         document.getElementById("voice_recognition_status").className = null
         document.getElementById("voice_recognition_status").style.backgroundImage = "url(imgs/mic-recognized.png)"
         console.log("Recognized numero de evidencias command")
         running_log[cur_idx]["Type"] = "numero de evidencias"
         console.log(`Heard '${vtext}'`)
-        vtext = vtext.replace('numero de evidencias', "").replace('dificultad', "").trim()
+        vtext = vtext.replace('numero de evidencias', "").trim()
         domovoi_msg += "colocar # de evidencia a "
 
         vtext = vtext.replace('tres','3')
@@ -529,10 +593,49 @@ function parse_speech(vtext){
         vtext = vtext.replace('uno','1').replace('un','1')
         vtext = vtext.replace('zero','0').replace('cero','0')
 
-        var smallest_num = 3
+        if(document.getElementById("num_evidence").value == "-1"){
+            var smallest_num = 3
+            var smallest_val = 100
+            var prev_value = document.getElementById("cust_num_evidence").value
+            var all_difficulty = ['0','1','2','3']
+
+            for(var i = 0; i < all_difficulty.length; i++){
+                var leven_val = levenshtein_distance(all_difficulty[i],vtext)
+                if(leven_val < smallest_val){
+                    smallest_val = leven_val 
+                    smallest_num = all_difficulty[i]
+                }
+            }
+            domovoi_msg += smallest_num
+
+            document.getElementById("cust_num_evidence").value = smallest_num ?? 3
+            if(prev_value != smallest_num){
+                filter()
+                flashMode()
+                saveSettings()
+            }
+        }
+        else{
+            domovoi_msg = "dificultad personalizada no seleccionada"
+        }
+
+        domovoi_heard(domovoi_msg)
+        running_log[cur_idx]["Domo"] = domovoi_msg
+        reset_voice_status()
+    }
+    else if(vtext.startsWith('dificultad')){
+        document.getElementById("voice_recognition_status").className = null
+        document.getElementById("voice_recognition_status").style.backgroundImage = "url(imgs/mic-recognized.png)"
+        console.log("Recognized dificultad command")
+        running_log[cur_idx]["Type"] = "dificultad"
+        console.log(`Heard '${vtext}'`)
+        vtext = vtext.replace('dificultad', "").trim()
+        domovoi_msg += "ajustar dificultad a "
+
+        var smallest_num = '3'
         var smallest_val = 100
         var prev_value = document.getElementById("num_evidence").value
-        var all_difficulty = ['0','1','2','3']
+        var all_difficulty = ["personalizada","apocalipsis","demencia","pesadilla","profesional","intermedia","principiante"]
 
         for(var i = 0; i < all_difficulty.length; i++){
             var leven_val = levenshtein_distance(all_difficulty[i],vtext)
@@ -543,9 +646,12 @@ function parse_speech(vtext){
         }
         domovoi_msg += smallest_num
 
+        smallest_num = {"-1":"personalizada","0":"apocalipsis","1":"demencia","2":"pesadilla","3":"profesional","3I":"intermedia","3A":"principiante"}[smallest_num]
         document.getElementById("num_evidence").value = smallest_num ?? 3
         if(prev_value != smallest_num){
             filter()
+            updateMapDifficulty(smallest_num)
+            showCustom()
             flashMode()
             saveSettings()
         }
@@ -563,6 +669,48 @@ function parse_speech(vtext){
         domovoi_msg += "menu colocado"
 
         toggleFilterTools()
+
+        domovoi_heard(domovoi_msg)
+        running_log[cur_idx]["Domo"] = domovoi_msg
+        reset_voice_status()
+    }
+    else if(vtext.startsWith('seleccionar mapa')){
+        document.getElementById("voice_recognition_status").className = null
+        document.getElementById("voice_recognition_status").style.backgroundImage = "url(imgs/mic-recognized.png)"
+        console.log("Recognized mapa command")
+        running_log[cur_idx]["Type"] = "mapa"
+        console.log(`Heard '${vtext}'`)
+        vtext = vtext.replace('seleccionar mapa', "").trim()
+        domovoi_msg = "mapa seleccionado"
+
+        var smallest_map = "tanglewood"
+        var smallest_val = 100
+
+        if(vtext != ""){
+
+            // Common replacements for maps
+            var prevtext = vtext;
+            for (const [key, value] of Object.entries(ZNLANG['maps'])) {
+                for (var i = 0; i < value.length; i++) {
+                    if(vtext.includes(value[i])){vtext = vtext.replace(value[i],key)}
+                }
+            }
+
+            var maps = document.getElementsByClassName("maps_button")
+
+            for(var i = 0; i < maps.length; i++){
+                var leven_val = levenshtein_distance(maps[i].id.toLowerCase(),vtext)
+                if(leven_val < smallest_val){
+                    smallest_val = leven_val 
+                    smallest_map = maps[i].id
+                }
+            }
+            console.log(`${prevtext} >> ${vtext} >> ${smallest_map}`)
+            running_log[cur_idx]["Debug"] = `${prevtext} >> ${vtext} >> ${smallest_map}`
+            domovoi_msg += `: ${smallest_map}`
+        }
+
+        changeMap(document.getElementById(smallest_map),all_maps[smallest_map])
 
         domovoi_heard(domovoi_msg)
         running_log[cur_idx]["Domo"] = domovoi_msg
@@ -602,9 +750,10 @@ function parse_speech(vtext){
             console.log(`${prevtext} >> ${vtext} >> ${smallest_map}`)
             running_log[cur_idx]["Debug"] = `${prevtext} >> ${vtext} >> ${smallest_map}`
             domovoi_msg += `: ${smallest_map}`
+
+            changeMap(document.getElementById(smallest_map),all_maps[smallest_map])
         }
 
-        changeMap(document.getElementById(smallest_map),all_maps[smallest_map])
         showMaps(true,false)
 
         domovoi_heard(domovoi_msg)

@@ -19,11 +19,11 @@ evi_icons = {
 }
 
 behavior_titles = {
-    "<Información>":"<div class='dtitle'><i>Tells</i><div class='ddash'></div></div>",
-    "<Comportamiento>":"<div class='dtitle'><i>Behaviors</i><div class='ddash'></div></div>",
-    "<Cordura de ataque>":"<div class='dtitle'><i>Hunt Sanity</i><div class='ddash'></div></div>",
-    "<Velocidad>":"<div class='dtitle'><i>Hunt Speed</i><div class='ddash'></div></div>",
-    "<Evidencia>":"<div class='dtitle'><i>Evidence</i><div class='ddash'></div></div>"
+    "<Información>":"<div class='dtitle'><i>Información</i><div class='ddash'></div></div>",
+    "<Comportamiento>":"<div class='dtitle'><i>Comportamiento</i><div class='ddash'></div></div>",
+    "<Cordura de ataque>":"<div class='dtitle'><i>Cordura de ataque</i><div class='ddash'></div></div>",
+    "<Velocidad>":"<div class='dtitle'><i>Velocidad</i><div class='ddash'></div></div>",
+    "<Evidencia>":"<div class='dtitle'><i>Evidencia</i><div class='ddash'></div></div>"
 }
 
 class Ghost {

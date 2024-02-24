@@ -319,25 +319,35 @@ function link_link(){
                 if (incoming_state['action'].toUpperCase() == "PONG"){
                     await_dlws_pong = false
                 }
+                if (incoming_state['action'].toUpperCase() == "GHOSTDATA"){
+                    send_ghost_data_link(rev(all_ghosts,incoming_state['ghost']))
+                }
+                if (incoming_state['action'].toUpperCase() == "GHOSTSELECT"){
+                    select(document.getElementById(rev(all_ghosts,incoming_state['ghost'])))
+                }
                 if (incoming_state['action'].toUpperCase() == "TIMER"){
-                    toggle_timer()
-                    send_timer()
+                    let force_start = incoming_state.hasOwnProperty("reset") && incoming_state["reset"] ? true : false;
+                    toggle_timer(force_start)
+                    send_timer(force_start)
                 }
                 if (incoming_state['action'].toUpperCase() == "COOLDOWNTIMER"){
-                    toggle_cooldown_timer()
-                    send_cooldown_timer()
+                    let force_start = incoming_state.hasOwnProperty("reset") && incoming_state["reset"] ? true : false;
+                    toggle_cooldown_timer(force_start)
+                    send_cooldown_timer(force_start)
                 }
                 if (incoming_state['action'].toUpperCase() == "HUNTTIMER"){
-                    toggle_hunt_timer()
-                    send_hunt_timer()
+                    let force_start = incoming_state.hasOwnProperty("reset") && incoming_state["reset"] ? true : false;
+                    toggle_hunt_timer(force_start)
+                    send_hunt_timer(force_start)
                 }
                 if (incoming_state['action'].toUpperCase() == "LINKED"){
                     document.getElementById("link_id_note").innerText = `STATUS: Linked`
                     document.getElementById("dllink_status").className = "connected"
                     dlws.send('{"action":"LINK"}')
-                    send_bpm_link("-","-",["50%","75%","100%","125%","150%"][parseInt($("#ghost_modifier_speed").val())])
                     send_timer_link("TIMER_VAL","0:00")
                     send_timer_link("COOLDOWN_VAL","0:00")
+                    send_timer_link("HUNT_VAL","0:00")
+                    send_bpm_link("-","-",["50%","75%","100%","125%","150%"][parseInt($("#ghost_modifier_speed").val())])
                     filter()
                     await_dlws_pong = false
                     dlws_ping = setInterval(function(){
@@ -438,15 +448,47 @@ function send_bpm_link(bpm,speed,modifer){
     }
 }
 
-function send_timer_link(timer,value){
+function send_timer_link(timer,value,alt_color = 0){
     if(hasDLLink){
-        dlws.send(`{"action":"${timer}","timer_val":"${value}"}`)
+        dlws.send(`{"action":"${timer}","timer_val":"${value}","status":${alt_color}}`)
     }
 }
 
 function send_ghost_link(ghost,value){
     if(hasDLLink){
         dlws.send(`{"action":"GHOST","ghost":"${ghost}","status":${value}}`)
+    }
+}
+
+function send_ghost_data_link(ghost){
+    if(hasDLLink){
+        var readd_classes = []
+        if($(document.getElementById(ghost)).hasClass("hidden"))
+            readd_classes.push("hidden")
+        if($(document.getElementById(ghost)).hasClass("permhidden"))
+            readd_classes.push("permhidden")
+
+        $(document.getElementById(ghost)).removeClass(readd_classes)
+        data = `<b>${document.getElementById(ghost).querySelector(".ghost_name").innerText}:<b>\n`
+        data += document.getElementById(ghost).querySelector(".ghost_evidence").innerText.trim().replaceAll("\n",", ") + (ghost == "The Mimic" ? ", *Orbes espectrales" : "") + "\n"
+        data += document.getElementById(ghost).querySelector(".ghost_behavior").innerText
+        data = data.replace("Información","\n<b>Información:<b>\n")
+        data = data.replace("Comportamiento","\n<b>Comportamiento:<b>\n")
+        data = data.replace("Cordura de ataque","\n<b>Cordura de ataque:<b>\n")
+        data = data.replace("Velocidad","\n<b>Velocidad:<b>\n")
+        data = data.replace("Evidencia","\n<b>Evidencia:<b>\n")
+        data = data.replace("🔊","")
+        data = data.replaceAll("<b>\n\n","<b>\n")
+        data = data.replace(/[ ]+/g,' ').trim()
+        $(document.getElementById(ghost)).addClass(readd_classes)
+
+        dlws.send(JSON.stringify({"action":"GHOSTDATA","ghost":`${document.getElementById(ghost).querySelector(".ghost_name").innerText}|${data}`}))
+    }
+}
+
+function send_empty_data_link(){
+    if(hasDLLink){
+        dlws.send(JSON.stringify({"action":"GHOSTDATA","ghost":`None|<i>Haz clic en un fantasma para ver sus historias y comportamientos\n(Utiliza ' { ' y ' } ' para desplazarte por los fantasmas)<i>`}))
     }
 }
 
@@ -485,6 +527,7 @@ function send_ping_link(){
 
 function send_reset_link(){
     if(hasDLLink){
+        send_empty_data_link()
         send_ghost_link("",0)
         send_ghosts_link(true)
         send_evidence_link(true)

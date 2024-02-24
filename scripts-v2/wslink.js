@@ -320,10 +320,10 @@ function link_link(){
                     await_dlws_pong = false
                 }
                 if (incoming_state['action'].toUpperCase() == "GHOSTDATA"){
-                    send_ghost_data_link(rev(all_ghosts,incoming_state['ghost']))
+                    send_ghost_data_link(incoming_state['ghost'])
                 }
                 if (incoming_state['action'].toUpperCase() == "GHOSTSELECT"){
-                    select(document.getElementById(rev(all_ghosts,incoming_state['ghost'])))
+                    select(document.getElementById(incoming_state['ghost']))
                 }
                 if (incoming_state['action'].toUpperCase() == "TIMER"){
                     let force_start = incoming_state.hasOwnProperty("reset") && incoming_state["reset"] ? true : false;

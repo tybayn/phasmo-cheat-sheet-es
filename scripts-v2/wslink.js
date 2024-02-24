@@ -482,7 +482,7 @@ function send_ghost_data_link(ghost){
         data = data.replace(/[ ]+/g,' ').trim()
         $(document.getElementById(ghost)).addClass(readd_classes)
 
-        dlws.send(JSON.stringify({"action":"GHOSTDATA","ghost":`${document.getElementById(ghost).querySelector(".ghost_name").innerText}|${data}`}))
+        dlws.send(JSON.stringify({"action":"GHOSTDATA","ghost":`${ghost}|${data}`}))
     }
 }
 

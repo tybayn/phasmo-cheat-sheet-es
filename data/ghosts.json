@@ -223,7 +223,8 @@
             "nightmare_evidence": null,
             "behavior": [
                 "<Información>",
-                "Sus interacciones no darán como resultado EMF 2, 3 o 5 cuando alguien esta en su habitación (excepto escritura o soplar una vela).",
+                "No puede realizar eventos en la misma habitación que un jugador (pero puede iniciar un evento fuera de la habitación y teletransportarse al jugador).",
+                "No hará interacciones que resulten en EMF 2, EMF 3, o EMF 5 mientras esté en la misma habitación que el jugador, incluyendo escribir fantasmas y soplar llamas (puede salir de la habitación e interactuar con cosas en la habitación).",
                 "No cazara con alguien en la misma habitación que el fantasma.",
                 "<Comportamiento>",
                 "Mas eventos cuando la cordura promedio esta baja (No hace eventos al 100% de cordura promedio).",

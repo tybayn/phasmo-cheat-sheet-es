@@ -20,9 +20,125 @@
     <link rel="stylesheet" href="wiki-v2/wiki.css" >
     <link rel="stylesheet" href="events/events.css" >
     <link rel="stylesheet" href="styles-v2/sparkles.css" >
+    <style>
+        #shutdown_blackout{
+            position: fixed;
+            background: rgba(0,0,0,0.9);
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-content: center;
+            z-index: 110;
+        }
+        #shutdown_box{
+            z-index: 100;
+            width: 600px;
+            height: auto;
+            max-height: calc(100vh - 100px);
+            background-color: #313248;
+            border-radius: 5px;  
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            flex-wrap: nowrap;
+            align-content: stretch;
+            align-items: flex-start;
+            color: #fff;
+            padding: 20px;
+            overflow-y: scroll;
+            font-size: 12px;
+        }
+
+        #shutdown_box .icon{
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 23px;
+            height:23px;
+            -ms-transform: rotate(45deg); /* IE 9 */
+            -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
+            transform: rotate(45deg);
+            cursor: pointer;
+        }
+
+        #shutdown_box .icon:before{
+            content:"";
+            position: absolute;
+            width:3px;
+            height:15px;
+            background-color:#fff;
+            left:10px;
+            top:4px;
+        }
+
+        #shutdown_box .icon:after{
+            content:"";
+            position: absolute;
+            width:15px;
+            height:3px;
+            background-color:#fff;
+            left:4px;
+            top:10px;
+        }
+
+        #shutdown_box h3{
+            margin-bottom: 8px;
+            font-size: 28px;
+        }
+
+        #shutdown_box .info_text{
+            margin-left: 10px;
+            font-size: 16px;
+            padding-bottom: 20px;
+        }
+
+        #shutdown_box a{
+            text-decoration: none;
+            color:#00aa2b;
+        }
+
+        .shutdown_button{
+            background-color: #770000;
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 7px;
+            align-self: center;
+        }
+
+        .shutdown_button:hover{
+            background-color: #a30000;
+        }
+    </style>
 </head>
 
 <body>
+
+    <div id="shutdown_blackout" style="display: none;">
+        <div id="shutdown_box">
+            <span class="icon" onclick="closeShutdown()"></span>
+            <h3>Notice!</h3>
+            <div class="info_text">This translated version of the Unofficial Phasmo Cheat Sheet site will be shutting down on <b><i>March 31, 2025</i></b> as it is not on our new language framework. The new system ensures all languages use a central backend, keeping data synced so that every language receives updates and features at the same time.</div>
+            <div class="info_text">If you’d like to help translate the site into this language, please join our <a href="https://discord.gg/afpvC7Bf7Y" target="_blank">Discord server</a>!</div>
+            <hr>
+            <h3>¡Atención!</h3>
+            <div class="info_text">Esta versión traducida del sitio web no oficial de Phasmo Cheat Sheet se cerrará el <b><i>31 de marzo de 2025</i></b>, ya que no está en nuestro nuevo marco de idioma. El nuevo sistema asegura que todos los idiomas utilicen un backend central, manteniendo los datos sincronizados para que cada idioma reciba actualizaciones y características al mismo tiempo.</div>
+            <div class="info_text">Si quieres ayudar a traducir el sitio a este idioma, ¡únete a nuestro <a href="https://discord.gg/afpvC7Bf7Y" target="_blank">Discord server</a>!</div>
+            <button class="shutdown_button" onclick="closeShutdown()">I understand / Entiendo que</button>
+        </div>
+    </div>
 
     <div id="blackout" style="display: none;">
         <div id="info_box">
@@ -544,7 +660,17 @@
     <script src="scripts-v2/voice_recognition.js"></script>
     <script src="scripts-v2/sparkles.js"></script>
     <script>
+        function closeShutdown(){
+            $("#shutdown_blackout").fadeToggle(400)
+            setCookie("shutdown_agreement","AGREED",7)
+        }
+
         $(window).on('load', function() {
+
+            let agreed = getCookie("shutdown_agreement")
+            if (!agreed)
+                closeShutdown()
+
             let load_wiki = new Promise((resolve, reject) => {
                 $("#wiki-body").load("wiki-v2/wiki.html")
                 resolve("Ghost data loaded")
